@@ -31,7 +31,6 @@ router.get('/search',authenticateUser, async (req, res) => {
   try {
     const events = await Event.find(query);
     res.status(200).json(events);
-    console.log(events);
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error' });
   }
@@ -66,23 +65,6 @@ router.post('/give-feedback/:eventId', authenticateUser, async (req, res) => {
       return res.status(404).json({ message: 'Event not found' });
     }
 
-    // Check if the attendee has booked a ticket for the event
-    const isAttendeeBooked = attendee.bookedEvents.some((booking) => booking.eventId.equals(event._id));
-    if (!isAttendeeBooked) {
-      return res.status(403).json({ message: 'You must book a ticket for the event to give feedback' });
-    }
-
-    // Check if the event is completed before allowing feedback
-    if (event.status !== 'completed') {
-      return res.status(400).json({ message: 'Feedback can only be given for completed events' });
-    }
-
-    // Check if the attendee has already given feedback for this event
-    const existingFeedback = event.feedbackAndRatings.find((item) => item.userEmail === attendeeEmail);
-    if (existingFeedback) {
-      return res.status(400).json({ message: 'Feedback already given for this event' });
-    }
-
     // Add feedback to the event
     event.feedbackAndRatings.push({
       userEmail: attendeeEmail,
@@ -98,6 +80,45 @@ router.post('/give-feedback/:eventId', authenticateUser, async (req, res) => {
   }
 });
 
+router.get('/checkForFeedback/:eventId', authenticateUser, async (req, res) => {
+  const eventId = req.params.eventId;
+  const attendeeEmail = req.email;
+  try{
+    const attendee = await Attendee.findOne({ email: attendeeEmail });
+    if (!attendee) {
+      return res.status(404).json({ message: 'Attendee not found' });
+    }
+
+    // Find the event by ID
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Check if the attendee has booked a ticket for the event
+    const isAttendeeBooked = attendee.bookedEvents.some((booking) => booking.eventId.equals(event._id));
+    if (!isAttendeeBooked) {
+      return res.status(403).json({ message: 'You must book a ticket for the event to give feedback' });
+    }
+
+    // Check if the event is completed before allowing feedback
+    if (event.status !== 'completed') {
+      return res.status(400).json({ message: 'Feedback can only be given for completed events' });
+    }
+
+    // Check if the attendee has already given feedback for this event
+    const existingFeedback = event.feedbackAndRatings.find((item) => item.userEmail === attendeeEmail);
+    if (existingFeedback) {
+      return res.status(400).json({ message: 'Feedback submitted for this event' });
+    }
+
+    res.status(201).json({ message: 'Feedback can be given' });
+
+  }catch(error) {
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
+  }
+  
+});
 
 
 
