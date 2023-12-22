@@ -12,6 +12,9 @@ const NavBar = () => (
       <li>
       <Link to="/logout">Logout</Link>
       </li>
+      <li>
+      <Link to="/profile">Profile</Link>
+      </li>
     </ul>
   </nav>
 );
