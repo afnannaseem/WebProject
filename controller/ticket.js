@@ -126,6 +126,18 @@ router.get('/', authenticateUser, async (req, res) => {
   }
 });
 
+router.get('/:ticketId', authenticateUser, async (req, res) => {
+  const ticketId= req.params.ticketId;
+
+  try {
+
+    const ticket = await Ticket.findById(ticketId);
+    res.status(200).json(ticket);
+  } catch (error) {
+    res.status(500).json({ message: 'Internal Server Error' + error});
+  }
+});
+
 
 router.post('/cancel/:ticketId', authenticateUser, async (req, res) => {
   const ticketId = req.params.ticketId;
@@ -141,14 +153,38 @@ router.post('/cancel/:ticketId', authenticateUser, async (req, res) => {
 
     // Find the ticket by ID
     const ticket = await Ticket.findById(ticketId);
+    const eventId = ticket.eventId.toString();
+
+
+    const event = await Event.findById(eventId);
+
 
     if (!ticket) {
       return res.status(404).json({ message: 'Ticket not found' });
     }
 
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    
+
     // Check if the ticket belongs to the authenticated user
     if (ticket.attendeeId.toString() !== attendee._id.toString()) {
       return res.status(403).json({ message: 'You do not have permission to cancel this ticket' });
+    }
+
+    if(event.status === 'completed'|| event.status==='ongoing'){
+      return res.status(403).json({ message: 'Can not cancel this ticket' });
+    }
+
+    if(ticket.type==='regular'){
+      event.regularTicketsSold-=1;
+      event.save();
+    }
+    else if(ticket.type==='vip'){
+      event.vipTicketsSold-=1;
+      event.save();
     }
 
     // Cancel the ticket
@@ -170,7 +206,7 @@ router.post('/cancel/:ticketId', authenticateUser, async (req, res) => {
 router.put('/updateticket/:ticketId', authenticateUser, async (req, res) => {
   const ticketId = req.params.ticketId;
   const { newType } = req.body;
-  const attendeeEmail = req.email; // Attendee email of the authenticated user
+  const attendeeEmail = req.email;
 
   try {
     // Find the attendee by email
