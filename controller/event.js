@@ -21,12 +21,17 @@ router.get('/search',authenticateUser, async (req, res) => {
 
   if (eventName) query.eventName = { $regex: new RegExp(eventName, 'i') };
   if (eventType) query.eventType = eventType;
-  if (date) query.dateTime = { $gte: new Date(date) };
+  if (date) {
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+    query.dateTime = { $gte: new Date(date), $lte: endOfDay };
+  }
   if (venue) query.venue = { $regex: new RegExp(venue, 'i') };
 
   try {
     const events = await Event.find(query);
     res.status(200).json(events);
+    console.log(events);
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error' });
   }
