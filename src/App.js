@@ -7,6 +7,8 @@ import LogoutButton from './components/Logout';
 import EventDetail from './components/EventDetail';
 import Profile from './components/Profile';
 import MyProfile from './components/MyProfile';
+import TicketList from './components/Tickets';
+import TicketDetails from './components/TicketDetails';
 
 const App = () => {
   return (
@@ -20,6 +22,8 @@ const App = () => {
         <Route path="/event/:eventId" element={<EventDetail />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/myprofile" element={<MyProfile />} />
+        <Route path="/tickets" element={<TicketList />} />
+        <Route path="/ticket/:ticketId" element={<TicketDetails />} />
         </Routes>
       </div>
     </Router>

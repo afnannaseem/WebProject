@@ -8,7 +8,7 @@ const Profile = () => (
         <Link to="/myprofile">My Profile</Link>
       </li>
       <li>
-      <Link to="/login">My Tickets</Link>
+      <Link to="/tickets">My Tickets</Link>
       </li>
       <li>
       <Link to="/logout">My Notifications</Link>

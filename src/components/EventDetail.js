@@ -131,7 +131,7 @@ const EventDetail = () => {
         <div>
           <h1>{event.eventName}</h1>
           <p>Event Type: {event.eventType}</p>
-          <p>Event Date: {event.dateTime}</p>
+          <p>Date: {new Date(event.dateTime).toLocaleString()}</p>
           <p>Event Venue: {event.venue}</p>
           <p>Price of regular ticket: {event.priceOfRegularTicket}</p>
           <p>Price of vip ticket: {event.priceOfVipTicket}</p>

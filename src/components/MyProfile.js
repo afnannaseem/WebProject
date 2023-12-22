@@ -65,7 +65,7 @@ const MyProfile = () => {
             {bookedEventsSummary.map(event => (
               <div>
               <Link to={`/event/${event.eventId}`}>
-                 <h3>Event: {event.eventName}</h3>
+                 <h6>Event: {event.eventName}</h6>
               </Link> 
               <p>Regular Tickets: {event.regularTickets}</p>
               <p>VIP Tickets: {event.vipTickets}</p>
