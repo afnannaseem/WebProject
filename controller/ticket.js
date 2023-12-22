@@ -175,7 +175,7 @@ router.post('/cancel/:ticketId', authenticateUser, async (req, res) => {
     }
 
     if(event.status === 'completed'|| event.status==='ongoing'){
-      return res.status(403).json({ message: 'Can not cancel this ticket' });
+      return res.status(403).json({ message: 'Can not cancel this ticket. Event is ongoing or completed' });
     }
 
     if(ticket.type==='regular'){
@@ -203,9 +203,9 @@ router.post('/cancel/:ticketId', authenticateUser, async (req, res) => {
 });
 
 
-router.put('/updateticket/:ticketId', authenticateUser, async (req, res) => {
+router.put('/update/:ticketId', authenticateUser, async (req, res) => {
   const ticketId = req.params.ticketId;
-  const { newType } = req.body;
+  const { ticketType } = req.body;
   const attendeeEmail = req.email;
 
   try {
@@ -229,7 +229,7 @@ router.put('/updateticket/:ticketId', authenticateUser, async (req, res) => {
     }
 
     // Update the type
-    ticket.type = newType;
+    ticket.type = ticketType;
     await ticket.save();
 
     res.status(200).json({ message: 'Ticket type updated successfully', ticketId: ticket._id, newType: ticket.type });
