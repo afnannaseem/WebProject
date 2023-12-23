@@ -15,7 +15,7 @@ router.get('/event-update', authenticateUser, async (req, res) => {
       }
   
       const eventUpdateNotifications = attendee.notifications.filter(
-        (notification) => notification.type === 'eventUpdate'
+        (notification) => notification.type === 'eventUpdate' 
       );
   
       res.status(200).json({ eventUpdateNotifications });
@@ -64,5 +64,23 @@ router.get('/event-update', authenticateUser, async (req, res) => {
     }
   });
 
+
+  router.post('/isReadByIndex', authenticateUser, async (req, res) => {
+    const attendeeEmail = req.email;
+    try {
+      const {notificationIndex}= req.body;
+      const update = {
+        $set: {
+          [`notifications.${notificationIndex}.isRead`]: true,
+        },
+      };
+  
+      await Attendee.updateOne({ email: attendeeEmail }, update);
+  
+      res.status(200).json({ message: 'Notification Updated successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Internal Server Error' + error });
+    }
+  });
   module.exports = router;
   
