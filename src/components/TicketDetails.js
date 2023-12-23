@@ -78,11 +78,6 @@ const TicketDetails = () => {
           ticketType
         }),
       });
-  
-      if (!response.ok) {
-        throw new Error(`Error updating ticket ${response.statusText}`);
-      }
-  
       const data = await response.json();
       setError(data.message);
       setFlag(!flag)

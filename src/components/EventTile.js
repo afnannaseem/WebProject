@@ -8,11 +8,11 @@ const EventTile = ({ event }) => {
     <div className="event-tile">
 
      <Link to={`/event/${event._id}`}>
-        <h3>{eventName}</h3>
+        <h3>Event Name: {eventName}</h3>
      </Link>  
-      <p>{eventType}</p>
-      <p>{new Date(dateTime).toLocaleString()}</p>
-      <p>{venue}</p>
+      <p>Event Type:{eventType}</p>
+      <p>Event Date:{new Date(dateTime).toLocaleString()}</p>
+      <p>Event Venue:{venue}</p>
       <p>Status: {status}</p>
     </div>
   );
