@@ -9,10 +9,10 @@ const Notifications = () => (
         <Link to="/updatenotifications">Event Updates</Link>
       </li>
       <li>
-        <Link to="/notifications/event-cancellation">Event Cancellations</Link>
+        <Link to="/cancellationnotifications">Event Cancellations</Link>
       </li>
       <li>
-        <Link to="/notifications/new-events">New Events</Link>
+        <Link to="/insertionnotifications">New Events</Link>
       </li>
     </ul>
   </div>

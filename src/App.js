@@ -11,6 +11,8 @@ import TicketList from './components/Tickets';
 import TicketDetails from './components/TicketDetails';
 import Notifications from './components/Notifcations';
 import UpdateNotifications from './components/UpdateNotifications';
+import CancelNotifications from './components/CancellationNotifications';
+import InsertNotifications from './components/InsertionNotifications';
 
 const App = () => {
   return (
@@ -28,6 +30,8 @@ const App = () => {
         <Route path="/ticket/:ticketId" element={<TicketDetails />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/updatenotifications" element={<UpdateNotifications />} />
+        <Route path="/cancellationnotifications" element={<CancelNotifications />} />
+        <Route path="/insertionnotifications" element={<InsertNotifications />} />
         </Routes>
       </div>
     </Router>

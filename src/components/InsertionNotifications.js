@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const UpdateNotifications = () => {
+const InsertNotifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [error, setError] = useState('');
 
@@ -10,7 +10,7 @@ const UpdateNotifications = () => {
       try {
         const token = localStorage.getItem('token');
         const apiUrl = process.env.REACT_APP_API_BASE_URL;
-        const response = await fetch(`${apiUrl}notification/event-update`, {
+        const response = await fetch(`${apiUrl}notification/new-event`, {
           method: 'GET',
           headers: {
             'token': token,
@@ -23,10 +23,9 @@ const UpdateNotifications = () => {
         }
 
         const data = await response.json();
-        setNotifications(data.eventUpdateNotifications);
+        setNotifications(data.eventNewNotifications);
       } catch (error) {
         setError('Error fetching notifications.');
-        console.error('Error fetching notifications:', error);
       }
     };
 
@@ -43,45 +42,40 @@ const UpdateNotifications = () => {
           'token': token,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({notificationId: id}),
+        body: JSON.stringify({ notificationId: id }),
       });
-      
     } catch (error) {
-      console.error('Error updating notification:', error.message);
+      console.error('Error marking notification as read:', error.message);
     }
   };
 
   return (
     <div>
-      <h2>Event Update Notifications</h2>
-      {error ? <p>{error}</p>:
-      <div>
-        {notifications.map((notification, index) => (
-          <div> 
-          {notification.isRead ? 
-          (<div>
-          <p>{notification.message}</p>
-           </div>
-          )
-          :(
-           <div>
-           <p>{notification.message}</p>
-           <Link to={`/event/${notification.eventId}`}>
-              <p>Event ID: {notification.eventId}</p>
-              <p>Event ID: {notification._id}</p>
-           </Link> 
-           <p>Date: {new Date(notification.createdAt).toLocaleString()}</p>
-           <button onClick={() => handleIsRead(notification._id)}>Mark as Read</button>
-           </div> 
-          )
-          }
-          
-          </div>
-        ))}
+      <h2>Insertion Notifications</h2>
+      {error ? <p>{error}</p> :
+        <div>
+          {notifications.map((notification, index) => (
+            <div key={index}>
+              {notification.isRead ? (
+                <div>
+                  <p>{notification.message}</p>
+                </div>
+              ) : (
+                <div>
+                  <p>{notification.message}</p>
+                  <Link to={`/event/${notification.eventId}`}>
+                    <p>Event ID: {notification.eventId}</p>
+                  </Link>
+                  <p>Date: {new Date(notification.createdAt).toLocaleString()}</p>
+                  <button onClick={() => handleIsRead(notification._id)}>Mark as Read</button>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       }
     </div>
   );
 };
 
-export default UpdateNotifications;
+export default InsertNotifications;
