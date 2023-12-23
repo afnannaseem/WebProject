@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 const TicketDetails = () => {
   const { ticketId } = useParams();
   const [ticket, setTicket] = useState(null);
+  const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -28,7 +29,8 @@ const TicketDetails = () => {
         }
 
         const data = await response.json();
-        setTicket(data);
+        setTicket(data.ticket);
+        setEvent(data.event);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -97,7 +99,7 @@ const TicketDetails = () => {
       ) : (
         <div>
           <p>Ticket ID: {ticket._id}</p>
-          <p>Event ID: {ticket.eventId}</p>
+          <p>Event Name: {event.eventName}</p>
           <p>type: {ticket.type}</p>
           <p>price: {ticket.price}</p>
           <p>purchase date:{new Date(ticket.purchaseDate).toLocaleString()}</p>

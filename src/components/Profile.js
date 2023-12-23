@@ -11,7 +11,7 @@ const Profile = () => (
       <Link to="/tickets">My Tickets</Link>
       </li>
       <li>
-      <Link to="/logout">My Notifications</Link>
+      <Link to="/notifications">My Notifications</Link>
       </li>
     </ul>
   </div>
