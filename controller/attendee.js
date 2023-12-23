@@ -3,6 +3,7 @@ const Attendee = require('../models/attendeeSchema');
 const authenticateUser = require('../authentication');
 const Event= require('../models/eventSchema');
 const Ticket= require('../models/ticketSchema');
+const User = require('../models/userSchema');
 
 const router = express.Router();
 
@@ -29,13 +30,18 @@ router.put('/profile', authenticateUser, async (req, res) => {
       return res.status(404).json({ message: 'Attendee not found' });
     }
 
+    const user = await User.findOne({ email: req.email });
+
+    user.name=name;
+    user.email=email;
+
     attendee.name = name;
     attendee.email = email;
 
+    await user.save();
+    await attendee.save();
 
-    const updatedAttendee = await attendee.save();
-
-    res.status(200).json({ name: updatedAttendee.name, email: updatedAttendee.email });
+    res.status(200).json({ message: 'Profile Updated Successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

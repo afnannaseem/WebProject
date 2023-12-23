@@ -219,10 +219,23 @@ router.put('/update/:ticketId', authenticateUser, async (req, res) => {
 
     // Find the ticket by ID
     const ticket = await Ticket.findById(ticketId);
+    const eventId = ticket.eventId.toString();
+
+
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
 
     if (!ticket) {
       return res.status(404).json({ message: 'Ticket not found' });
     }
+
+    if(event.status === 'completed'|| event.status==='ongoing'){
+      return res.status(403).json({ message: 'Can not update this ticket. Event is ongoing or completed' });
+    }
+
 
     // Check if the ticket belongs to the authenticated user
     if (ticket.attendeeId.toString() !== attendee._id.toString()) {
