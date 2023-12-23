@@ -24,7 +24,7 @@ router.get('/event-update', authenticateUser, async (req, res) => {
     }
   });
 
-  router.get('/event-cancel', authenticateUser, async (req, res) => {
+  router.get('/event-cancellation', authenticateUser, async (req, res) => {
     const attendeeEmail = req.email;
   
     try {

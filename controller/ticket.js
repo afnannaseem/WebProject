@@ -130,9 +130,10 @@ router.get('/:ticketId', authenticateUser, async (req, res) => {
   const ticketId= req.params.ticketId;
 
   try {
-
     const ticket = await Ticket.findById(ticketId);
-    res.status(200).json(ticket);
+    const eventId= ticket.eventId;
+    const event= await Event.findById(eventId);
+    res.status(200).json({ticket,event});
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error' + error});
   }
