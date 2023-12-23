@@ -6,7 +6,7 @@ const Notifications = () => (
     <p>Notifications</p>
     <ul>
       <li>
-        <Link to="/notifications/event-update">Event Updates</Link>
+        <Link to="/updatenotifications">Event Updates</Link>
       </li>
       <li>
         <Link to="/notifications/event-cancellation">Event Cancellations</Link>

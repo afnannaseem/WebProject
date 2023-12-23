@@ -10,6 +10,7 @@ import MyProfile from './components/MyProfile';
 import TicketList from './components/Tickets';
 import TicketDetails from './components/TicketDetails';
 import Notifications from './components/Notifcations';
+import UpdateNotifications from './components/UpdateNotifications';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/tickets" element={<TicketList />} />
         <Route path="/ticket/:ticketId" element={<TicketDetails />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/updatenotifications" element={<UpdateNotifications />} />
         </Routes>
       </div>
     </Router>
