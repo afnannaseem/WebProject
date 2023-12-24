@@ -14,11 +14,11 @@ import UpdateNotifications from './components/UpdateNotifications';
 import CancelNotifications from './components/CancellationNotifications';
 import InsertNotifications from './components/InsertionNotifications';
 import Footer from './components/Footer';
-
+import './App.css';
 const App = () => {
   return (
     <Router>
-      <div style={{backgroundColor:'#66BFBF', minHeight:'100vh', display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
+      <div id='mainDiv'>
         <NavBar />
         <Routes>
         <Route path="/login" element={<Login />} />

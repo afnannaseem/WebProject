@@ -3,8 +3,9 @@ import EventIcon from '@mui/icons-material/Event';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import '../styles/Footer.css'
 const Footer = () => (
-  <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 border-top" style={{ fontFamily:'Nunito, sans-serif', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor:'#EAF6F6', padding:'10px', marginTop:'25px'}}>
+  <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 border-top" id='footerTag'>
     <div className="col-md-4 d-flex align-items-center">
       <a href="/" className="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
         <EventIcon/>

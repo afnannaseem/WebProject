@@ -5,14 +5,15 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import EventIcon from '@mui/icons-material/Event';
+import '../styles/NavBar.css'
 
 const NavBar = () => (
   
-  <nav className="navbar navbar-expand-lg " style={{ fontFamily:'Nunito, sans-serif', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor:'#EAF6F6'}}>
+  <nav className="navbar navbar-expand-lg " id='nav'>
     <div className="container-fluid">
       <Link className="navbar-brand"  to="/">
         <EventIcon/>
-        <span style={{marginLeft:'5px'}}>EMS</span>
+        <span style={{fontFamily:'Nunito, sans-serif', marginLeft:'5px'}}>EMS</span>
       </Link>
       <button
         className="navbar-toggler"

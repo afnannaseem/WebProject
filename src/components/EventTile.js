@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/EventTile.css'
 
 const EventTile = ({ event }) => {
   const { eventName, eventType, dateTime, venue} = event;
 
   return (
-    <div className="card text-center" style={{ fontFamily:'Nunito, sans-serif', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginBottom:'10px', backgroundColor:'white', border:'4px solid snow'}}>
-      <div className="card-header" style={{backgroundColor:'snow', borderBottom:'3px solid #66BFBF'}}>
+    <div className="card text-center" id='eventTileMainDiv'>
+      <div className="card-header" id='eventTileHeaderDiv'>
           <h3>Event Name: {eventName}</h3>
       </div>
-      <div className="card-body" style={{ fontSize: '18px', backgroundColor:'snow' }}>
+      <div className="card-body" id='eventTileBodyDiv'>
         <p className="card-text">Type: {eventType}</p>
         <p className="card-text">Date: {new Date(dateTime).toLocaleString()}</p>
         <p className="card-text">Venue: {venue}</p>
@@ -17,7 +18,7 @@ const EventTile = ({ event }) => {
           View
         </Link>
       </div>
-      <div className="card-footer text-body-secondary" style={{backgroundColor:'snow', borderTop:'3px solid #66BFBF'}}>
+      <div className="card-footer text-body-secondary" id='eventTileFooterDiv'>
         Posted at EMS
       </div>
     </div>

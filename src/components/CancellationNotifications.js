@@ -51,23 +51,23 @@ const CancelNotifications = () => {
 
   return (
     <div className="px-4 py-5 my-5 text-center">
-      <div className="col-lg-6 mx-auto" style={{ fontFamily: 'Nunito, sans-serif', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', backgroundColor: 'white', borderRadius: '20px', paddingTop: '30px', marginTop: '20px' }}>
+      <div className="col-lg-6 mx-auto" id='allNotificationsSecondDiv'>
         <h1 className="display-5 fw-bold text-body-emphasis">Cancellation Notifications</h1>
 
         {error ? (
           <p>{error}</p>
         ) : (
-          <div style={{ fontSize: '1.5rem', marginTop: '25px', paddingBottom: '20px' }}>
+          <div id='allNotificationsNotificationDiv'>
             {notifications.map((notification, index) => (
               <div key={index}>
                 {notification.isRead ? (
-                  <div className="alert alert-secondary" role="alert" style={{ margin: '20px' }}>
+                  <div className="alert alert-secondary" role="alert" id='allNotificationsParagraph'>
                     <p>{notification.message}</p>
                   </div>
                 ) : (
-                  <div className="alert alert-info" role="alert" style={{ margin: '20px' }}>
+                  <div className="alert alert-info" role="alert" id='allNotificationsParagraph'>
                     <p>{notification.message}</p>
-                    <Link to={`/event/${notification.eventId}`} style={{ textDecoration: 'none' }}>
+                    <Link to={`/event/${notification.eventId}`} id='allNotificationsLinks'>
                       <p>Event ID: {notification.eventId}</p>
                     </Link>
                     <p>Date: {new Date(notification.createdAt).toLocaleString()}</p>

@@ -1,0 +1,39 @@
+#eventDetailMainDiv {
+  font-family: "Nunito", sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border-radius: 20px;
+  padding-top: 30px;
+  margin-top: 20px;
+}
+
+.eventDetailsParagraphElements {
+  font-size: 1.7rem;
+  margin-top: 25px;
+}
+
+#eventDetailsPurchaseButtons {
+  margin: 30px;
+}
+
+#eventDetailsFeedbackFormMainDiv {
+  height: 270px;
+  width: 400px;
+  background-color: white;
+  margin-left: 22%;
+  margin-top: 20px;
+}
+
+#eventDetailsFeedbackSubmitButton {
+  margin-top: 15px;
+}
+
+#eventDetailFeedbackStatus {
+  font-size: 1.7rem;
+  margin-top: 25px;
+}
+
+#eventDetailLoadingEventDetails {
+  font-size: 1.7rem;
+  margin-top: 25px;
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EventTile from './EventTile';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
+import '../styles/Home.css';
 
 const HomePage = () => {
   const [events, setEvents] = useState([]);
@@ -44,7 +45,7 @@ const HomePage = () => {
   
 
   return (
-    <div className="container home-page px-3" style={{ fontFamily:'Nunito, sans-serif', backgroundColor:'#EAF6F6', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius:'20px', paddingTop:'1px', marginTop:'20px', paddingBottom:'10px'}}>
+    <div className="container home-page px-3" id='homeMainDiv'>
     <h2 className="mt-4">Search <SearchSharpIcon fontSize='large'/></h2>
     <div className="row mt-4">
       <div className="col-md-3">

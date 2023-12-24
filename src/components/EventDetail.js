@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import '../styles/EventDetail.css';
+
+
 const EventDetail = () => {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
@@ -128,14 +131,15 @@ const EventDetail = () => {
   return (
     <div className="px-4 py-5 my-5 text-center" >
     {event ? (
-      <div className="col-lg-6 mx-auto" style={{ fontFamily:'Nunito, sans-serif', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', backgroundColor:'white', borderRadius:'20px', paddingTop:'30px', marginTop:'20px'}}>
+      <div className="col-lg-6 mx-auto" id='eventDetailMainDiv'>
         <h1 className="display-5 fw-bold text-body-emphasis">{event.eventName}</h1>
-        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Event Type: {event.eventType}</p>
-        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Date: {new Date(event.dateTime).toLocaleString()}</p>
-        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Event Venue: {event.venue}</p>
-        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Event Status: {event.status}</p>
-        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Price of regular ticket: {event.priceOfRegularTicket}</p>
-        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Price of VIP ticket: {event.priceOfVipTicket}</p>
+
+        <p className='eventDetailsParagraphElements'>Event Type: {event.eventType}</p>
+        <p className='eventDetailsParagraphElements'>Date: {new Date(event.dateTime).toLocaleString()}</p>
+        <p className='eventDetailsParagraphElements'>Event Venue: {event.venue}</p>
+        <p className='eventDetailsParagraphElements'>Event Status: {event.status}</p>
+        <p className='eventDetailsParagraphElements'>Price of regular ticket: {event.priceOfRegularTicket}</p>
+        <p className='eventDetailsParagraphElements'>Price of VIP ticket: {event.priceOfVipTicket}</p>
         
         {purchaseStatus && (
           <div className="alert alert-info" role="alert">
@@ -143,10 +147,12 @@ const EventDetail = () => {
             <button type="button" className="btn-close" onClick={() => setPurchaseStatus(null)}></button>
           </div>
         )}
-        <button style={{ margin:'30px'}} onClick={purchaseRegularTicket} className="btn btn-outline-secondary btn-lg px-4 gap-3">Purchase Regular Ticket</button>
-        <button style={{ margin:'30px'}} onClick={purchaseVipTicket} className="btn btn-primary btn-lg px-4">Purchase VIP Ticket</button>
+
+        <button id='eventDetailsPurchaseButtons' onClick={purchaseRegularTicket} className="btn btn-outline-secondary btn-lg px-4 gap-3">Purchase Regular Ticket</button>
+        <button id='eventDetailsPurchaseButtons' onClick={purchaseVipTicket} className="btn btn-primary btn-lg px-4">Purchase VIP Ticket</button>
+
         {checkForFeedback() && showFeedbackForm && (
-          <div style={{height:'270px', width:'400px', backgroundColor:'white', marginLeft:'22%', marginTop:'20px'}}>
+          <div id='eventDetailsFeedbackFormMainDiv'>
           <h3>Feedback</h3>
           <div className="form-floating mb-3">
             <input
@@ -170,14 +176,14 @@ const EventDetail = () => {
             />
             <label htmlFor="rating">Rating</label>
           </div>
-          <button style={{marginTop:'10px'}} className="btn btn-primary" onClick={submitFeedback}>
+          <button id='eventDetailsFeedbackSubmitButton' className="btn btn-primary" onClick={submitFeedback}>
             Submit Feedback
           </button>
         </div>
         )}
         {!feedbackSuccess && (
           <div className="alert alert-info" role="alert">
-            <p style={{fontSize:'1.7rem', marginTop:'25px'}}>{feedbackStatus}</p>
+            <p id='eventDetailFeedbackStatus'>{feedbackStatus}</p>
           </div>
         )}
         {feedbackSuccess && (
@@ -188,7 +194,7 @@ const EventDetail = () => {
         )}
       </div>
     ) : (
-      <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Loading event details...</p>
+      <p id='eventDetailLoadingEventDetails'>Loading event details...</p>
     )}
     
   </div>
