@@ -91,7 +91,7 @@ const MyProfile = () => {
       <h3 style={{marginTop:'15px'}}>Personal Info</h3>
       {profileData ? (
         <div>
-          <p style={{fontSize:'1.2rem', marginTop:'10px'}}>Name: {profileData.name}</p>
+          <p style={{fontSize:'1.2rem', marginTop:'25px'}}>Name: {profileData.name}</p>
           <p style={{fontSize:'1.2rem', marginTop:'25px'}}>Email: {profileData.email}</p>
           <button onClick={handleUpdate} className="btn btn-primary">
             Update Your Profile
