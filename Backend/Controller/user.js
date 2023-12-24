@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
   console.log(req.body);
-  const { email, password, signIn, name, role } = req.body;
+  var { email, password, signIn, name, role } = req.body;
   var user = await User.findOne({ email: email });
   if (!signIn) {
     user = await User.findOne({
@@ -25,10 +25,13 @@ const login = async (req, res) => {
 
   if (signIn && !user) {
     let verified = true;
-    if (role.toLowerCase() === "admin") {
+    if (role?.toLowerCase() === "admin") {
       verified = false;
     }
-    console.log(role.toLowerCase());
+    console.log(role?.toLowerCase());
+    if (role == null) {
+      role = "user"
+    }
     User.create({
       name: name,
       email: email,
@@ -54,7 +57,7 @@ const login = async (req, res) => {
       role: user.role,
     });
   }
-  if (password !== user.password) {
+  if (password !== user?.password) {
     return res.status(400).json({ message: "Invalid email or password" });
   }
 };
@@ -109,12 +112,75 @@ const RequestAcceptMessge = async (req, res) => {
   await user.save();
   res.status(200).json({
     message: "Message Accepted",
+    name: user.name,
+    email: user.email,
   });
 };
 
+const PendingRequest = async (req, res) => {
+  const user = await User.find({ verified: false });
+  let data = user.map((item) => ({
+    name: item.name,
+    email: item.email,
+    role: item.role,
+    id: item._id,
+  }));
+  res.status(200).json({
+    data,
+  });
+};
+const AcceptedRequest = async (req, res) => {
+  try {
+    const { idno } = req.body;
+    const user = await User.findOne({ _id: idno });
+    if (user) {
+      user.verified = true;
+      await user.save();
+      return res.status(200).json({
+        verified: user.verified,
+        name: user.name,
+        email: user.email,
+      });
+    } else {
+      return res.status(400).json({
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    console.error("Error in AcceptedRequest:", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
+const DeclineRequest = async (req, res) => {
+  try {
+    const { idno } = req.body;
+    const user = await User.findOneAndRemove({ _id: idno });
+    if (user) {
+      return res.status(200).json({
+        verified: user.verified,
+        name: user.name,
+        email: user.email,
+      });
+    } else {
+      return res.status(400).json({
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    console.error("Error in AcceptedRequest:", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
 module.exports = {
   login,
   signup,
   verifyAccount,
   RequestAcceptMessge,
+  PendingRequest,
+  AcceptedRequest,
+  DeclineRequest,
 };

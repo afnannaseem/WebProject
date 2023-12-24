@@ -1,23 +1,27 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
-import Title from './Title';
+import { Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import * as React from "react";
+import {
+  Label,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-// Generate Sales Data
 function createData(time, amount) {
   return { time, amount };
 }
 
 const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined),
+  createData("12sep", 0),
+  createData("13sep", 300),
+  createData("14sep", 600),
+  createData("15sep", 5000),
+  createData("16sep", 3000),
+  createData("17sep", 2500),
+  createData("18sep", 4000),
 ];
 
 export default function Chart() {
@@ -25,7 +29,12 @@ export default function Chart() {
 
   return (
     <React.Fragment>
-      <Title>Today</Title>
+      <Typography
+        component="div"
+        sx={{ ml: 3, mt: 1, mb: 1, color: "#fff", fontSize: 14 }}
+      >
+        <b>Weekly Sale</b>
+      </Typography>
       <ResponsiveContainer>
         <LineChart
           data={data}
@@ -38,27 +47,24 @@ export default function Chart() {
         >
           <XAxis
             dataKey="time"
-            stroke={theme.palette.text.secondary}
+            stroke={"#ffff"}
             style={theme.typography.body2}
           />
-          <YAxis
-            stroke={theme.palette.text.secondary}
-            style={theme.typography.body2}
-          >
+          <YAxis stroke={"#ffff"} style={theme.typography.body2}>
             <Label
               angle={270}
               position="left"
               style={{
-                textAnchor: 'middle',
-                fill: theme.palette.text.primary,
+                textAnchor: "middle",
+                fill: "#adb5bd",
                 ...theme.typography.body1,
               }}
             >
-              Sales ($)
+              Sales (Rs)
             </Label>
           </YAxis>
           <Line
-            isAnimationActive={false}
+            isAnimationActive={true}
             type="monotone"
             dataKey="amount"
             stroke={theme.palette.primary.main}

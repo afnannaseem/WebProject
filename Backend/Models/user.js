@@ -38,6 +38,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  pic: {
+    type: String,
+    default: "https://i.imgur.com/6VBx3io.png",
+  },
 });
 const User = mongoose.model("User", userSchema);
 module.exports = User;
