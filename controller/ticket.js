@@ -242,7 +242,17 @@ router.put('/update/:ticketId', authenticateUser, async (req, res) => {
       return res.status(403).json({ message: 'You do not have permission to update this ticket' });
     }
 
-    // Update the type
+    if(ticketType==='vip'){
+      if (event.vipTicketsSold >= event.maxTicketsVip) {
+        return res.status(400).json({ message: 'VIP tickets are sold out' });
+      }
+    }
+    else if (ticketType==='regular'){
+      if (event.regularTicketsSold >= event.maxTicketsRegular) {
+        return res.status(400).json({ message: 'Regular tickets are sold out' });
+      }
+    }
+
     ticket.type = ticketType;
     await ticket.save();
 
