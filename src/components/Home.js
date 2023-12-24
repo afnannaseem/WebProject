@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import EventTile from './EventTile';
+import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 
 const HomePage = () => {
   const [events, setEvents] = useState([]);
@@ -43,51 +44,60 @@ const HomePage = () => {
   
 
   return (
-    <div className="home-page">
-      <h1>All Events</h1>
-        <div>
-          <label>Event Name:</label>
+    <div className="container home-page px-3" style={{ fontFamily:'Nunito, sans-serif', backgroundColor:'#EAF6F6', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius:'20px', paddingTop:'1px', marginTop:'20px', paddingBottom:'10px'}}>
+    <h2 className="mt-4">Search <SearchSharpIcon fontSize='large'/></h2>
+    <div className="row mt-4">
+      <div className="col-md-3">
+        <div className="mb-3">
+          <label className="form-label">Event Name:</label>
           <input
             type="text"
+            className="form-control"
             name="eventName"
             value={searchParams.eventName}
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label>Event Type:</label>
+        <div className="mb-3">
+          <label className="form-label">Event Type:</label>
           <input
             type="text"
+            className="form-control"
             name="eventType"
             value={searchParams.eventType}
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label>Date:</label>
+        <div className="mb-3">
+          <label className="form-label">Date:</label>
           <input
             type="date"
+            className="form-control"
             name="date"
             value={searchParams.date}
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label>Venue:</label>
+        <div className="mb-3">
+          <label className="form-label">Venue:</label>
           <input
             type="text"
+            className="form-control"
             name="venue"
             value={searchParams.venue}
             onChange={handleInputChange}
           />
         </div>
-
-      <div className="event-list">
-        {events.map(event => (
-          <EventTile key={event._id} event={event} />
-        ))}
+      </div>
+      <div className="col-md-9">
+        <div className="event-list" >
+          {events.map(event => (
+            <EventTile key={event._id} event={event} />
+          ))}
+        </div>
       </div>
     </div>
+  </div>
   );
 };
 

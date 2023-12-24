@@ -13,11 +13,12 @@ import Notifications from './components/Notifcations';
 import UpdateNotifications from './components/UpdateNotifications';
 import CancelNotifications from './components/CancellationNotifications';
 import InsertNotifications from './components/InsertionNotifications';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
     <Router>
-      <div>
+      <div style={{backgroundColor:'#66BFBF'}}>
         <NavBar />
         <Routes>
         <Route path="/login" element={<Login />} />
@@ -33,8 +34,10 @@ const App = () => {
         <Route path="/cancellationnotifications" element={<CancelNotifications />} />
         <Route path="/insertionnotifications" element={<InsertNotifications />} />
         </Routes>
+        <Footer/>
       </div>
     </Router>
+    
   );
 };
 

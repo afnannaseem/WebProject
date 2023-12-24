@@ -12,7 +12,6 @@ const MyProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch attendee profile from the backend API using fetch
     const token = localStorage.getItem('token');
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -27,7 +26,6 @@ const MyProfile = () => {
         if (!response.ok) {
           throw new Error(`Error fetching profile: ${response.statusText}`);
         }
-        //console.log(response.json());
         return response.json();
       })
       .then(data => setProfileData(data))

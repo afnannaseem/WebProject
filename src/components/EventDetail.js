@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
 const EventDetail = () => {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
@@ -90,7 +89,8 @@ const EventDetail = () => {
         setShowFeedbackForm(true);
       }
       const data = await response.json();
-      if(data.message==='Feedback submitted for this event'){
+      console.log(data.message);
+      if(data.message!=='Feedback can be given'){
         setFeedbackStatus(data.message);
       }
     } catch (error) {
@@ -126,58 +126,60 @@ const EventDetail = () => {
   };
 
   return (
-    <div className="event-detail">
-      {event ? (
-        <div>
-          <h1>{event.eventName}</h1>
-          <p>Event Type: {event.eventType}</p>
-          <p>Date: {new Date(event.dateTime).toLocaleString()}</p>
-          <p>Event Venue: {event.venue}</p>
-          <p>Price of regular ticket: {event.priceOfRegularTicket}</p>
-          <p>Price of vip ticket: {event.priceOfVipTicket}</p>
-          <button onClick={purchaseRegularTicket}>Purchase Regular Ticket</button>
-          <button onClick={purchaseVipTicket}>Purchase VIP Ticket</button>
-          {checkForFeedback() && showFeedbackForm && (
-            <div>
-              <label htmlFor="feedback">Feedback:</label>
-              <input
-                type="text"
-                id="feedback"
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-              />
-              <label htmlFor="rating">Rating:</label>
-              <input
-                type="number"
-                id="rating"
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
-              />
-              <button onClick={submitFeedback}>Submit Feedback</button>
-            </div>
-          )}
-        </div>
-      ) : (
-        <p>Loading event details...</p>
-      )}
-      {purchaseStatus && (
-        <div>
-          <p>{purchaseStatus}</p>
-          <button onClick={() => setPurchaseStatus(null)}>Close</button>
-        </div>
-      )}
-      {!feedbackSuccess &&  (
-        <div>
-          <p>{feedbackStatus}</p>
-        </div>
-      )}
-      {feedbackSuccess && (
-        <div>
-          <p>{feedbackSuccess}</p>
-          <button onClick={() => setFeedbackSuccess(null)}>Close</button>
-        </div>
-      )}
-    </div>
+    <div className="px-4 py-5 my-5 text-center" >
+    {event ? (
+      <div className="col-lg-6 mx-auto" style={{ fontFamily:'Nunito, sans-serif', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor:'white', borderRadius:'20px', paddingTop:'30px', marginTop:'20px'}}>
+        <h1 className="display-5 fw-bold text-body-emphasis">{event.eventName}</h1>
+        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Event Type: {event.eventType}</p>
+        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Date: {new Date(event.dateTime).toLocaleString()}</p>
+        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Event Venue: {event.venue}</p>
+        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Event Status: {event.status}</p>
+        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Price of regular ticket: {event.priceOfRegularTicket}</p>
+        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Price of VIP ticket: {event.priceOfVipTicket}</p>
+        {purchaseStatus && (
+          <div className="alert alert-info" role="alert">
+            <p>{purchaseStatus}</p>
+            <button type="button" className="btn-close" onClick={() => setPurchaseStatus(null)}></button>
+          </div>
+        )}
+        <button style={{ margin:'30px'}} onClick={purchaseRegularTicket} className="btn btn-outline-secondary btn-lg px-4 gap-3">Purchase Regular Ticket</button>
+        <button style={{ margin:'30px'}} onClick={purchaseVipTicket} className="btn btn-primary btn-lg px-4">Purchase VIP Ticket</button>
+        {checkForFeedback() && showFeedbackForm && (
+          <div>
+            <label htmlFor="feedback">Feedback:</label>
+            <input
+              type="text"
+              id="feedback"
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+            />
+            <label htmlFor="rating">Rating:</label>
+            <input
+              type="number"
+              id="rating"
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+            />
+            <button onClick={submitFeedback}>Submit Feedback</button>
+          </div>
+        )}
+        {!feedbackSuccess && (
+          <div className="alert alert-info" role="alert">
+            <p style={{fontSize:'1.7rem', marginTop:'25px'}}>{feedbackStatus}</p>
+          </div>
+        )}
+        {feedbackSuccess && (
+          <div className="alert alert-info" role="alert">
+            <p>{feedbackSuccess}</p>
+            <button type="button" className="btn-close" onClick={() => setFeedbackSuccess(null)}></button>
+          </div>
+        )}
+      </div>
+    ) : (
+      <p>Loading event details...</p>
+    )}
+    
+  </div>
   );
 };
 
