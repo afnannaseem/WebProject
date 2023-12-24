@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/TicketDetails.css";
+import { useNavigate } from 'react-router-dom';
 
 const TicketDetails = () => {
   const { ticketId } = useParams();
@@ -11,6 +12,7 @@ const TicketDetails = () => {
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [ticketType, setTicketType] = useState("regular");
   const [flag, setFlag] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +60,9 @@ const TicketDetails = () => {
 
       const data = await response.json();
       setError(data.message);
+      setTimeout(() => {
+        navigate('/tickets')
+      }, 2000);
     } catch (error) {
       console.error("Error canceling ticket:", error.message);
     }

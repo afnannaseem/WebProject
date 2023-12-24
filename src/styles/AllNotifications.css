@@ -4,8 +4,9 @@
     background-color: white;
     border-radius: 20px;
     padding-top: 30px;
-    margin-top: 20px;    
+    margin-top: 20px;
 }
+
 
 #allNotificationsNotificationDiv{
     font-size: 1.5rem;
@@ -13,9 +14,16 @@
     padding-bottom: 20px;    
 }
 
+
 #allNotificationsParagraph{
 margin: 20px;
+transition: transform 0.2s ease-in-out;
 }
+
+#allNotificationsParagraph:hover{
+    transform: scale(1.025);
+}
+
 
 #allNotificationsLinks{
     text-decoration: none;

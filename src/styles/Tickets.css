@@ -5,7 +5,13 @@
     border-radius: 20px;
     padding-top: 30px;
     margin-top: 20px;
+    transition: transform 0.2s ease-in-out;
     }
+
+    #ticketsSecondDiv:hover{
+        transform: scale(1.02);
+    }
+
     
     #ticketsUnorderedList{
     list-style-type: none;

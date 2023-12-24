@@ -143,12 +143,12 @@ const EventDetail = () => {
         
         {purchaseStatus && (
           <div className="alert alert-info" role="alert">
-            <p>{purchaseStatus}</p>
+            <p id='eventDetailPurchaseStatusParagraph'>{purchaseStatus}</p>
             <button type="button" className="btn-close" onClick={() => setPurchaseStatus(null)}></button>
           </div>
         )}
 
-        <button id='eventDetailsPurchaseButtons' onClick={purchaseRegularTicket} className="btn btn-outline-secondary btn-lg px-4 gap-3">Purchase Regular Ticket</button>
+        <button id='eventDetailsPurchaseButtons' onClick={purchaseRegularTicket} className="btn btn-secondary btn-lg px-4 gap-3">Purchase Regular Ticket</button>
         <button id='eventDetailsPurchaseButtons' onClick={purchaseVipTicket} className="btn btn-primary btn-lg px-4">Purchase VIP Ticket</button>
 
         {checkForFeedback() && showFeedbackForm && (

@@ -5,6 +5,11 @@ background-color: white;
 border-radius: 20px;
 padding-top: 30px;
 margin-top: 20px;
+transition: transform 0.2s ease-in-out;
+}
+
+#profileSecondDiv:hover{
+    transform: scale(1.02);
 }
 
 #profileUnorderedList{
