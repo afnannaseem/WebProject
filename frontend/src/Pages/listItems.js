@@ -1,72 +1,82 @@
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import BarChartIcon from "@mui/icons-material/BarChart";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import LayersIcon from "@mui/icons-material/Layers";
+import EventIcon from "@mui/icons-material/Event";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PeopleIcon from "@mui/icons-material/People";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PersonIcon from "@mui/icons-material/Person";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from "@mui/material/ListSubheader";
 import * as React from "react";
+import { useBoard } from "../Hooks/useMainBoard";
+const style = {
+  color: "#ffff",
+};
+const style2 = {
+  color: "#adb5bd",
+};
+const hover = {
+  "&:hover": { backgroundColor: "#3D4551" },
+};
 
-export const mainListItems = (
-  <React.Fragment>
-    <ListItemButton >
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItemButton>
-  </React.Fragment>
-);
-
-export const secondaryListItems = (
-  <React.Fragment>
-    <ListSubheader component="div" inset>
-      Saved reports
-    </ListSubheader>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItemButton>
-  </React.Fragment>
-);
+export default function MainListItems() {
+  const { setName } = useBoard();
+  return (
+    <React.Fragment>
+      <ListItemButton
+        onClick={() => {
+          setName("Dashboard");
+        }}
+        sx={hover}
+      >
+        <ListItemIcon sx={style}>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText sx={style2} primary="Dashboard" />
+      </ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          setName("Events");
+        }}
+        sx={hover}
+      >
+        <ListItemIcon sx={style}>
+          <EventIcon />
+        </ListItemIcon>
+        <ListItemText sx={style2} primary="Events" />
+      </ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          setName("Organizer");
+        }}
+        sx={hover}
+      >
+        <ListItemIcon sx={style}>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText sx={style2} primary="Organizer" />
+      </ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          setName("Vendors");
+        }}
+        sx={hover}
+      >
+        <ListItemIcon sx={style}>
+          <PersonIcon />
+        </ListItemIcon>
+        <ListItemText sx={style2} primary="Vendors" />
+      </ListItemButton>
+      <ListItemButton
+        onClick={() => {
+          setName("Sales");
+        }}
+        sx={hover}
+      >
+        <ListItemIcon sx={style}>
+          <MonetizationOnIcon />
+        </ListItemIcon>
+        <ListItemText sx={style2} primary="Sales" />
+      </ListItemButton>
+    </React.Fragment>
+  );
+}

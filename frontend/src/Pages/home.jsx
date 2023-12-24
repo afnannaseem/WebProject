@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import ResponsiveAppBar from '../Component/Appbar';
+import CopyRight from '../Component/CopyRight';
 import PopularEvent from '../Component/PopularCard';
 import SliderImage from '../Component/SliderContent';
 import BestPart from '../Component/bestPart';
@@ -106,6 +107,7 @@ function ControlledCarousel() {
                     </div>
                 </div>
             </div>
+            <CopyRight sx={{ pt: 10, pb: 10, color: 'black' }} />
         </div >
     );
 }

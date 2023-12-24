@@ -74,6 +74,7 @@ export default function LoginModal(props) {
             setdata(detail);
             const res = await verifyAccount(data);
             if (res?.registered === true) {
+                setdata({ ...data, role: role });
                 const res = await login(data);
                 console.log(res);
                 if (res?.verified === false) {
