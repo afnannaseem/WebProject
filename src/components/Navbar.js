@@ -47,6 +47,7 @@ const NavBar = () => (
               <LogoutIcon />
             </Link>
           </li>
+          
         </ul>
       </div>
     </div>

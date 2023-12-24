@@ -54,7 +54,7 @@ const MyProfile = () => {
   };
 
   const handleSubmit = async () => {
-    if (!name.trim() || !email.trim()) {
+    if (!name || !email) {
       setError('Enter the details');
       return;
     }
@@ -84,62 +84,89 @@ const MyProfile = () => {
   };
 
   return (
-    <div className="my-profile">
-      <h1>My Profile</h1>
+    <div className="container my-profile px-4 py-2" style={{ fontFamily: 'Nunito, sans-serif', backgroundColor:'#EAF6F6', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius:'20px', paddingTop:'1px', marginTop:'20px', paddingBottom:'10px' }}>
+      <h2 className="mt-4">My Profile</h2>
+      <div className="row mt-4" >
+      <div className="col-md-3" >
+      <h3 style={{marginTop:'15px'}}>Personal Info</h3>
       {profileData ? (
         <div>
-          <p>Email: {profileData.email}</p>
-          <p>Name: {profileData.name}</p>
-          <button onClick={handleUpdate}>Update Your Profile</button>
+          <p style={{fontSize:'1.2rem', marginTop:'10px'}}>Name: {profileData.name}</p>
+          <p style={{fontSize:'1.2rem', marginTop:'25px'}}>Email: {profileData.email}</p>
+          <button onClick={handleUpdate} className="btn btn-primary">
+            Update Your Profile
+          </button>
           {showUpdateForm && (
-            <div>
-              <label htmlFor="name">Name:</label>
+            <div className="mb-3">
+              <h3 style={{marginTop:'15px'}}>Update Profile</h3>
+              <label htmlFor="name" className="form-label">
+                Name:
+              </label>
               <input
                 type="text"
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                className="form-control"
               />
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email" className="form-label">
+                Email:
+              </label>
               <input
                 type="text"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="form-control"
               />
-              <button onClick={handleSubmit}>Submit</button>
+              <button style={{marginTop:'15px'}} onClick={handleSubmit} className="btn btn-success">
+                Submit
+              </button>
             </div>
           )}
           {error && (
-          <div>
-          <p>{error}</p>
-          <button onClick={() => setError(null)}>Close</button>
-        </div>
-           )}
+            <div style={{marginTop:'25px', textAlign:'center'}} className="alert alert-info" role="alert">
+              <p>{error}</p>
+              <button onClick={() => setError(null)} className="btn-close">
+              </button>
+            </div>
+          )}
         </div>
       ) : (
-        <p>Loading profile...</p>
+        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Loading profile...</p>
       )}
+      </div>
+     <div className="col-md-9">
       {bookedEventsSummary ? (
         <div>
-          <h3>Booked Events</h3>
+          <h3 style={{marginTop:'15px', marginLeft:'40%', marginBottom:'15px'}}>Booked Events</h3>
           <ul>
-            {bookedEventsSummary.map(event => (
-              <div>
-              <Link to={`/event/${event.eventId}`}>
-                 <h6>Event: {event.eventName}</h6>
-              </Link> 
-              <p>Regular Tickets: {event.regularTickets}</p>
-              <p>VIP Tickets: {event.vipTickets}</p>
-              <p>Total Tickets: {event.totalTickets}</p>
-              </div>
+            {bookedEventsSummary.map((event) => (
+             <div className="card text-center" style={{ fontFamily: 'Nunito, sans-serif', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', marginBottom: '10px', backgroundColor: 'white', border: '4px solid snow' }}>
+             <div className="card-header" style={{ backgroundColor: 'snow', borderBottom: '3px solid #66BFBF' }}>
+               <h3>Event Name: {event.eventName}</h3>
+             </div>
+             <div className="card-body" style={{ fontSize: '20px', backgroundColor: 'snow' }}>
+             <p>Regular Tickets: {event.regularTickets}</p>
+               <p>VIP Tickets: {event.vipTickets}</p>
+               <p>Total Tickets: {event.totalTickets}</p>
+               <Link to={`/event/${event.eventId}`} className="btn btn-primary">
+                 View Event
+               </Link>
+             </div>
+             <div className="card-footer text-body-secondary" style={{ backgroundColor: 'snow', borderTop: '3px solid #66BFBF' }}>
+               <p>EMS</p>
+             </div>
+           </div>
             ))}
           </ul>
         </div>
       ) : (
-        <p>Loading booked events...</p>
+        <p style={{fontSize:'1.7rem', marginTop:'25px'}}>Loading booked events...</p>
       )}
     </div>
+  </div>
+</div>
   );
 };
 

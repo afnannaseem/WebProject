@@ -18,7 +18,7 @@ import Footer from './components/Footer';
 const App = () => {
   return (
     <Router>
-      <div style={{backgroundColor:'#66BFBF'}}>
+      <div style={{backgroundColor:'#66BFBF', minHeight:'100vh', display:'flex', flexDirection:'column', justifyContent:'space-between'}}>
         <NavBar />
         <Routes>
         <Route path="/login" element={<Login />} />

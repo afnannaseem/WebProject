@@ -18,7 +18,7 @@ const EventTile = ({ event }) => {
         </Link>
       </div>
       <div className="card-footer text-body-secondary" style={{backgroundColor:'snow', borderTop:'3px solid #66BFBF'}}>
-        ...
+        Posted at EMS
       </div>
     </div>
   );

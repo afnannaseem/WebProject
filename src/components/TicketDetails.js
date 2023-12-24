@@ -87,44 +87,51 @@ const TicketDetails = () => {
   };
 
   return (
-    <div>
-      <h1>Ticket Details</h1>
-      {loading ? (
-        <p>Loading ticket details...</p>
-      ) : (
-        <div>
-          <p>Ticket ID: {ticket._id}</p>
-          <p>Event Name: {event.eventName}</p>
-          <p>type: {ticket.type}</p>
-          <p>price: {ticket.price}</p>
-          <p>purchase date:{new Date(ticket.purchaseDate).toLocaleString()}</p>
-          <button onClick={handleCancelTicket}>Cancel Ticket</button>
-          <button onClick={handleUpdateTicket}>Update Ticket</button>
-          {showUpdateForm && (
-            <div>
-              <label htmlFor="ticketType">Ticket Type:</label>
-             <select
+    <div className="px-4 py-5 my-5 text-center">
+  {loading ? (
+    <p style={{ fontSize: '1.7rem', marginTop: '25px' }}>Loading ticket details...</p>
+  ) : (
+    <div className="col-lg-6 mx-auto" style={{ fontFamily: 'Nunito, sans-serif', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', backgroundColor: 'white', borderRadius: '20px', paddingTop: '30px', marginTop: '20px', paddingBottom:'20px' }}>
+      <h1 className="display-5 fw-bold text-body-emphasis">Ticket Details</h1>
+      
+      <div style={{ fontSize: '1.4rem', marginTop: '25px' }}>
+        <p>Ticket ID: {ticket._id}</p>
+        <p>Event Name: {event.eventName}</p>
+        <p>Type: {ticket.type}</p>
+        <p>Price: {ticket.price}</p>
+        <p>Purchase Date: {new Date(ticket.purchaseDate).toLocaleString()}</p>
+        {error && (
+        <div className="alert alert-info" role="alert">
+          <p style={{ fontSize: '1.4rem' }}>{error}</p>
+          <button  type="button" className="btn-close" onClick={() => setError(null)}></button>
+        </div>
+        )}
+        <button style={{ marginTop: '15px' }} onClick={handleCancelTicket} className="btn btn-danger">Cancel Ticket</button>
+        <button style={{ marginTop: '15px', marginLeft: '10px' }} onClick={handleUpdateTicket} className="btn btn-primary">Update Ticket</button>
+
+        {showUpdateForm && (
+          <div style={{ marginTop: '15px', width:'400px', marginLeft:'22%'}}>
+            <label htmlFor="ticketType">Ticket Type:</label>
+            <select
               id="ticketType"
               value={ticketType}
               onChange={(e) => setTicketType(e.target.value)}
+              className="form-select"
             >
-            <option value="regular">Regular</option>
-            <option value="vip">VIP</option>
-             </select>
-            <button onClick={handleSubmit}>Submit</button>
-            <button onClick={() => setShowUpdateForm(false)}>Close</button>
-            </div>
-          )}
-        </div>
-        
-      )}
-      {error && (
-        <div>
-          <p>{error}</p>
-          <button onClick={() => setError(null)}>Close</button>
-        </div>
-      )}
+              <option value="regular">Regular</option>
+              <option value="vip">VIP</option>
+            </select>
+
+            <button style={{ marginTop: '10px' }} onClick={handleSubmit} className="btn btn-success">Submit</button>
+            <button style={{ marginTop: '10px', marginLeft: '10px' }} onClick={() => setShowUpdateForm(false)} className="btn btn-secondary">Close</button>
+          </div>
+        )}
+      </div>
+
+     
     </div>
+  )}
+</div>
   );
 };
 

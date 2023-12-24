@@ -37,24 +37,27 @@ const TicketList = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Ticket List</h1>
+    <div className="px-4 py-5 my-5 text-center">
+    <div className="col-lg-6 mx-auto" style={{ fontFamily: 'Nunito, sans-serif', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', backgroundColor: 'white', borderRadius: '20px', paddingTop: '30px', marginTop: '20px' }}>
+      <h1 className="display-5 fw-bold text-body-emphasis">Ticket List</h1>
+
       {loading ? (
-        <p>Loading tickets...</p>
+        <p style={{ fontSize: '1.7rem', marginTop: '25px' }}>Loading tickets...</p>
       ) : error ? (
-        <p>Error: {error}</p>
+        <p style={{ fontSize: '1.7rem', marginTop: '25px' }}>Error: {error}</p>
       ) : (
-        <ul>
+        <ul style={{ listStyleType: 'none', padding: 0, paddingBottom:'10px'}}>
           {tickets.map(ticket => (
-            <li key={ticket._id}>
-              <Link to={`/ticket/${ticket._id}`}>
-                   <h6>{ticket._id}</h6>
-              </Link>  
+            <li key={ticket._id} style={{ marginTop: '15px'}}>
+              <Link to={`/ticket/${ticket._id}`} style={{ textDecoration: 'none' }}>
+                <p style={{fontSize:'1.7rem', marginTop:'25px'}}>{ticket._id}</p>
+              </Link>
             </li>
           ))}
         </ul>
       )}
     </div>
+  </div>
   );
 };
 
