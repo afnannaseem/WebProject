@@ -1,16 +1,17 @@
 import { Container, Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
 import CopyRight from '../Component/CopyRight';
+import EventCard from './EventCard';
 import EventRevenue from './EventRevenue';
 import EventChart from './EventSaleChart';
-import EventCard from './EventCard';
+import TicketHolder from './TicketHolderTable';
 
 
 export default function Event() {
     return (
         <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={8} lg={9}>
+                <Grid item xs={12} md={12} lg={9}>
                     <div>
                         <Typography component="div" sx={{ mt: 1, mb: 2, color: '#adb5bd', fontSize: 14 }}>
                             <b>Event Detail</b>
@@ -29,10 +30,10 @@ export default function Event() {
                         }}
                         className='scroll-smooth scrollbar-hide'
                     >
-                        <EventCard/>
+                        <EventCard />
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={4} lg={3}>
+                <Grid item xs={12} md={12} lg={3}>
                     <Grid container spacing={2.5}>
                         <Grid item xs={12}>
                             <div>
@@ -91,7 +92,7 @@ export default function Event() {
                 <Grid item xs={12}>
                     <div>
                         <Typography component="div" sx={{ mt: 6, mb: 2, color: '#adb5bd', fontSize: 14 }}>
-                            <b>Event Request</b>
+                            <b>Total Sale</b>
                         </Typography>
                     </div>
                     <Paper
@@ -110,6 +111,31 @@ export default function Event() {
                         className='scroll-smooth scrollbar-hide'
                     >
                         <EventChart />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <div>
+                        <Typography component="div" sx={{ mb: 2, color: '#adb5bd', fontSize: 14 }}>
+                            <b>Ticket Buyer</b>
+                        </Typography>
+                    </div>
+                    <Paper
+                        sx={{
+                            p: 2,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            mb: 3,
+                            bgcolor: '#313844',
+                            overflow: 'scroll',
+                            minHeight: 1000,
+                            maxHeight: 1000,
+                            height: 1000,
+                            maxWidth: '100%',
+                            mt: 2,
+                        }}
+                        className='scroll-smooth scrollbar-hide'
+                    >
+                        <TicketHolder />
                     </Paper>
                 </Grid>
             </Grid>

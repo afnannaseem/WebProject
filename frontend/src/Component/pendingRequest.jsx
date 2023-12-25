@@ -76,7 +76,7 @@ const PendingRequest = () => {
     if (data?.data?.length === 0) {
         return (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                <Typography component="div" sx={{mt:10, color: '#ffff', fontSize: 16 }}>
+                <Typography component="div" sx={{ mt: 10, color: '#ffff', fontSize: 16 }}>
                     <b>No Pending Request</b>
                 </Typography>
             </div>

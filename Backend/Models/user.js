@@ -40,7 +40,8 @@ const userSchema = new mongoose.Schema({
   },
   pic: {
     type: String,
-    default: "https://i.imgur.com/6VBx3io.png",
+    default:
+      "https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg",
   },
 });
 const User = mongoose.model("User", userSchema);

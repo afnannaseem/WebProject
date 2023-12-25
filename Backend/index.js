@@ -57,6 +57,11 @@ app.get("/data",async(req,res)=>{
   const data = await User.find({});
   res.json(data);
 })
+app.post("/remove", async (req, res) => {
+  const { id } = req.body;
+const data = await User.findOneAndRemove({ _id: id });
+  res.json(data);
+});
 const ios = socketIO(server, {
   cors: {
     origin: "http://localhost:3000", // replace with your frontend app URL
