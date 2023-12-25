@@ -5,9 +5,10 @@ import "../App.css";
 const Accept = () => {
     const navigate = useNavigate();
     useEffect(() => {
-        sendRequest("/RequestAcceptMessge", "put")
+        console.log(process.env.REACT_APP_Base_URL + "/RequestAcceptMessge")
+        sendRequest(process.env.REACT_APP_Base_URL + "/RequestAcceptMessge", "Put", {})
         setTimeout(() => {
-            navigate("/");
+            navigate("/home")
         }, 3000);
     }, [navigate]);
     return (

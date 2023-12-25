@@ -10,9 +10,12 @@ async function sendRequest(url, method, body = null) {
                 'Content-Type': 'application/json',
                 token: token,
             },
-            data: body == null ? null : JSON.stringify(body),
+            data: body == null || body == undefined ? null : JSON.stringify(body),
         });
-        console.log(response.data);
+        console.log(response?.data);
+        if (response?.status !== 200) {
+            return response;
+        }
         if (response?.data?.token) {
             localStorage.setItem('token', response?.data?.token);
         }

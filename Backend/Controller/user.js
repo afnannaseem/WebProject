@@ -2,8 +2,7 @@ const User = require("../Models/user");
 const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
-  console.log(req.body);
-  var { email, password, signIn, name, role } = req.body;
+  var { email, password, signIn, name, role, pic } = req.body;
   var user = await User.findOne({ email: email });
   if (!signIn) {
     user = await User.findOne({
@@ -11,7 +10,6 @@ const login = async (req, res) => {
       password: password,
     });
   }
-  console.log(user);
   if (user?.verified === false) {
     return res
       .status(401)
@@ -25,23 +23,28 @@ const login = async (req, res) => {
 
   if (signIn && !user) {
     let verified = true;
+    let showMessages = true;
     if (role?.toLowerCase() === "admin") {
       verified = false;
+      showMessages = false;
     }
-    console.log(role?.toLowerCase());
     if (role == null) {
-      role = "user"
+      role = "user";
     }
-    User.create({
+    console.log(pic);
+    console.log(req.body);
+    await User.create({
       name: name,
       email: email,
       password: password,
       role: role.toLowerCase(),
       signIn: signIn,
       verified: verified,
+      showMessages: showMessages,
+      pic: pic,
     });
-    user = await User.findOne({ email: email });
   }
+  user = await User.findOne({ email: email });
   if (user) {
     const token = jwt.sign(
       { id: user._id, role: user.role, email: user.email },
@@ -62,10 +65,10 @@ const login = async (req, res) => {
   }
 };
 const signup = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role, pic } = req.body;
   const user = await User.findOne({ email: email });
   if (user) {
-    return res.status(401).json({ message: "Account Already exist" });
+    return res.status(401).json({ message: "Account Already exist!" });
   }
   var verified = true;
   var showMessages = true;
@@ -80,15 +83,16 @@ const signup = async (req, res) => {
     role: role.toLowerCase(),
     verified: verified,
     showMessages: showMessages,
+    pic: pic,
   })
     .then(() => {
       res.status(200).json({
-        message: "Account created successfully",
+        message: "Account created successfully!",
       });
     })
     .catch((err) => {
       res.status(500).json({
-        message: "Account creation failed",
+        message: "Account creation failed!",
       });
     });
 };
@@ -107,9 +111,11 @@ const verifyAccount = async (req, res) => {
 };
 const RequestAcceptMessge = async (req, res) => {
   const id = req.id;
+  console.log(id);
   const user = await User.findOne({ _id: id });
   user.showMessages = true;
   await user.save();
+  console.log(user);
   res.status(200).json({
     message: "Message Accepted",
     name: user.name,
@@ -123,6 +129,7 @@ const PendingRequest = async (req, res) => {
     name: item.name,
     email: item.email,
     role: item.role,
+    pic: item.pic,
     id: item._id,
   }));
   res.status(200).json({

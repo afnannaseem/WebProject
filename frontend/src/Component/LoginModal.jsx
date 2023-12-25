@@ -2,14 +2,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CloseIcon from '@mui/icons-material/Close';
 import { Checkbox } from "@mui/material";
+import Alert from '@mui/material/Alert';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+import Snackbar from '@mui/material/Snackbar';
+import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import GoogleButton from 'react-google-button';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +20,8 @@ import { z } from "zod";
 import { useAuth } from "../Hooks/AuthContext";
 import { useLogin } from "../Hooks/useLogin";
 import { useVerifyAccount } from "../Hooks/useVerifyAccount";
+import { storage } from "../firebase";
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -50,7 +55,7 @@ export default function LoginModal(props) {
         setOpen(false)
 
     };
-    const { login, loading, error, success } = useLogin();
+    const { login, loading, error } = useLogin();
     const { verifyAccount } = useVerifyAccount();
     const form = useRef();
     const { googleSignIn } = useAuth() || {};
@@ -59,7 +64,52 @@ export default function LoginModal(props) {
         name: "",
         signIn: "",
         role: "",
+        pic: ""
     });
+
+    const [image, setImage] = React.useState("https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg");
+    const [uploadProgress, setUploadProgress] = React.useState(0);
+    const uploadImage = async (name) => {
+        if (name == null) {
+            return;
+        }
+        const imageref = storage.ref(`/images/${name.name + formattedTime}`);
+        imageref.put(name).on(
+            "state_changed",
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setUploadProgress(progress);
+            },
+            (error) => {
+                console.error(error);
+            },
+            () => {
+                imageref.getDownloadURL().then((url) => {
+                    console.log(url);
+                    register.pic = url;
+                    setImage(url);
+                    setUploadProgress(0);
+                    setSuccess({
+                        variant: 'success',
+                        message: 'Your Image uploaded successfully!',
+                    });
+                    handleClicks();
+                    return url;
+                });
+            }
+        );
+    };
+    const [currentTime, setCurrentTime] = useState(new Date());
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+        return () => clearInterval(intervalId);
+    }, []);
+    const storeImage = (e) => {
+        uploadImage(e.target.files[0]);
+    }
+    const formattedTime = currentTime.toLocaleTimeString();
     const handleClick = async () => {
         try {
             const response = await googleSignIn();
@@ -70,11 +120,16 @@ export default function LoginModal(props) {
                 email: email,
                 name: name,
                 signIn: verified,
+                role: role,
+                pic: image
             }
-            setdata(detail);
+            data.email = detail.email;
+            data.name = detail.name;
+            data.signIn = detail.signIn;
+            data.role = detail.role;
+            data.pic = detail.pic;
             const res = await verifyAccount(data);
             if (res?.registered === true) {
-                setdata({ ...data, role: role });
                 const res = await login(data);
                 console.log(res);
                 if (res?.verified === false) {
@@ -87,29 +142,44 @@ export default function LoginModal(props) {
             else {
                 setRegister(false);
             }
-
         } catch (error) {
             console.log(error);
         }
     };
-    //toast.error("Error: Please try again", {
-    //     //         position: "top-right",
-    //     //         autoClose: 5000,
-    //     //         hideProgressBar: false,
-    //     //         closeOnClick: true,
-    //     //         pauseOnHover: true,
-    //     //         draggable: true,
-    //     //         progress: undefined,
-    //     //         theme: "dark",
-    //     //     });
+    const [success, setSuccess] = React.useState({
+        variant: 'success',
+        message: 'Your Account created successfully!',
+    });
+    const [opens, setOpens] = React.useState(false);
+    const handleClicks = () => {
+        setOpens(true);
+        setTimeout(() => {
+            setOpens(false);
+        }, 3000);
+    };
+    const handleCloses = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpens(false);
+    };
+
     const GoogleSinUp = async () => {
-        setdata({ ...data, role: role });
+        data.role = role;
+        data.pic = image;
         const res = await login(data);
-        if (res?.verified === true) {
+        if (res?.verified === false) {
             navigate('/pending', { replace: true });
         }
-        else if (res?.showMessages === false) {
-            navigate('/accept', { replace: true });
+        else if (res?.role === "superadmin") {
+            navigate('/Dashboard', { replace: true });
+        }
+        else if (res?.role === "admin") {
+
+        }
+        else if (res?.role === "vendor") {
+        }
+        else if (res?.role === "user") {
         }
     }
     const navigate = useNavigate();
@@ -135,6 +205,13 @@ export default function LoginModal(props) {
             }
             else if (res?.role === 'superadmin') {
                 navigate('/Dashboard', { replace: true });
+            }
+            else {
+                setSuccess({
+                    variant: 'error',
+                    message: 'Your Account is not registered!',
+                });
+                handleClicks();
             }
             reset();
         } catch (error) {
@@ -268,7 +345,6 @@ export default function LoginModal(props) {
                                 <Typography id="modal-modal-description" sx={{ mt: 2, ml: 1.5 }}>
                                     Select your role
                                 </Typography>
-
                             </div>
                             <Autocomplete
                                 disablePortal
@@ -277,11 +353,35 @@ export default function LoginModal(props) {
                                 isOptionEqualToValue={(option, value) => option.label === value}
                                 value={role}
                                 onChange={(event, newValue) => {
-                                    setRole(newValue?.label);
+                                    setRole(newValue.label);
                                 }}
                                 sx={{ width: 400, marginLeft: 1.5, marginTop: 3.0 }}
                                 renderInput={(params) => <TextField {...params} placeholder="Choose your role" />}
                             />
+                            <div style={{ textAlign: "center", marginTop: "20px", width: 400, height: 40 }}>
+                                <label htmlFor="fileInput" className="custom-file-upload" style={{ marginLeft: 10, width: 400 }}>
+                                    Choose File
+                                </label>
+                                <input
+                                    id="fileInput"
+                                    type="file"
+                                    onChange={storeImage}
+                                    style={{ display: "none" }}
+                                />
+                            </div>
+                            <div style={{ marginTop: 10 }}>
+                                {uploadProgress > 0 && uploadProgress < 100 && (
+                                    <div style={{ width: '100%', background: 'black', borderRadius: 5, overflow: 'hidden' }}>
+                                        <div
+                                            style={{
+                                                width: `${uploadProgress}%`,
+                                                height: 10,
+                                                background: '#4caf50',
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                            </div>
                             <Button sx={{ mt: 8.0, width: 400, marginLeft: 1.5, height: 45 }} variant="contained" onClick={GoogleSinUp}>Register</Button>
                             <div style={{ marginTop: 30, marginLeft: 15, color: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <Typography id="modal-modal-title" variant="h7" component="h2"  >
@@ -296,9 +396,16 @@ export default function LoginModal(props) {
                                     Forgot Password?
                                 </Typography>
                             </div>
-
                         </div>
                     }
+
+                    <Stack spacing={3} sx={{ ml: 5, width: '100%' }}>
+                        <Snackbar open={opens} autoHideDuration={6000} onClose={handleCloses}>
+                            <Alert onClose={handleCloses} severity={success.variant} sx={{ width: '100%' }}>
+                                {success.message}
+                            </Alert>
+                        </Snackbar>
+                    </Stack>
                 </Box>
             </Modal>
         </div>

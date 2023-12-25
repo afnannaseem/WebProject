@@ -4,7 +4,7 @@ import "../App.css";
 const Success = () => {
     const navigate = useNavigate()
     function redirectHomePage() {
-        navigate('/', { replace: true })
+        navigate('/home', { replace: true })
     }
     return (
         <div className="container">

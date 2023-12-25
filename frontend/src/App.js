@@ -7,6 +7,7 @@ import "./App.css";
 //import sendRequest from "./Api Call/apiCalls";
 import { Link } from "react-router-dom";
 import { useAuth } from "./Hooks/AuthContext";
+
 import logo from "./logo.svg";
 function App() {
   const { googleSignIn } = useAuth() || {};
@@ -47,6 +48,8 @@ function App() {
       console.log(result.error.message);
     }
   };
+
+
   return (
     <div className="App">
       <header className="App-header">

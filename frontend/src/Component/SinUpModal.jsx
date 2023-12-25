@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import CloseIcon from '@mui/icons-material/Close';
-import { Checkbox } from "@mui/material";
+import { Alert, Checkbox, Snackbar, Stack } from "@mui/material";
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,15 +8,17 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import useSignup from "../Hooks/useSinup";
+import "../Style/bootstrap.css";
+import { storage } from "../firebase";
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
-    height: 700,
+    height: 750,
     transform: 'translate(-50%, -50%)',
     width: 500,
     bgcolor: 'background.paper',
@@ -33,6 +35,33 @@ export default function SinUpModal(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const [role, setRole] = useState('User');
+    const [opens, setOpens] = React.useState(false);
+    const [success, setSuccess] = React.useState({
+        variant: 'success',
+        message: 'Your Account created successfully!',
+    });
+    const handleClick = () => {
+        setOpens(true);
+        setTimeout(() => {
+            if (opens || success.variant === 'success') {
+                handleClose();
+                handleCloses();
+            }
+        }, 3000);
+    };
+    const handleClicks = () => {
+        setOpens(true);
+        setTimeout(() => {
+            setOpens(false);
+        }, 3000);
+    };
+    const handleCloses = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpens(false);
+    };
+
     const {
         register,
         handleSubmit,
@@ -40,17 +69,89 @@ export default function SinUpModal(props) {
         reset,
     } = useForm({ resolver: zodResolver(schema) });
     const handleClose = () => {
-        reset();
-        setOpen(false)
+        setOpens(false);
+        setOpen(false);
+        form.current.reset();
+        setRole('User');
+        setImage("https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg");
+        setName(null);
     };
-    const { signUp, loading, error, success } = useSignup();
+    const { signUp } = useSignup();
     const form = useRef();
+    const [image, setImage] = React.useState("https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg");
+    const [name, setName] = React.useState(null);
+    const [uploadProgress, setUploadProgress] = React.useState(0);
+    const uploadImage = async (name) => {
+        if (name == null) {
+            return;
+        }
+        const imageref = storage.ref(`/images/${name.name + formattedTime}`);
+        imageref.put(name).on(
+            "state_changed",
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setUploadProgress(progress);
+            },
+            (error) => {
+                console.error(error);
+            },
+            () => {
+                imageref.getDownloadURL().then((url) => {
+                    console.log(url);
+                    register.pic = url;
+                    setImage(url);
+                    setUploadProgress(0);
+                    setSuccess({
+                        variant: 'success',
+                        message: 'Your Image uploaded successfully!',
+                    });
+                    handleClicks();
+                    return url;
+                });
+            }
+        );
+    };
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+        return () => clearInterval(intervalId);
+    }, []);
+    const storeImage = (e) => {
+        if (e.target.files[0] == null) {
+            setSuccess({
+                variant: 'error',
+                message: 'Error in uploading image!',
+            });
+            handleClick();
+        }
+        // setName(e.target.files[0]);
+        uploadImage(e.target.files[0]);
+    }
+    const formattedTime = currentTime.toLocaleTimeString();
     const onSubmit = async (fieldValues) => {
         try {
             fieldValues.role = role;
+            fieldValues.pic = image;
             console.log(fieldValues);
-            await signUp(fieldValues);
+            const res = await signUp(fieldValues);
+            if (res?.message !== "Account created successfully!") {
+                setSuccess({
+                    variant: 'error',
+                    message: res?.message,
+                });
+            }
+            else {
+                setSuccess({
+                    variant: 'success',
+                    message: res?.message,
+                });
+            }
             reset();
+            handleClick();
+            setOpens(true);
         } catch (error) {
             console.error(error);
         }
@@ -71,7 +172,6 @@ export default function SinUpModal(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-
                 <Box sx={style}>
                     <div>
                         <div style={{ display: 'flex', justifyContent: "end", alignContent: 'end' }}
@@ -179,6 +279,30 @@ export default function SinUpModal(props) {
                                 }}
                                 renderInput={(params) => <TextField {...params} placeholder="Choose your role" />}
                             />
+                            <div style={{ textAlign: "center", marginTop: "20px", width: 400, height: 40 }}>
+                                <label htmlFor="fileInput" className="custom-file-upload" style={{ marginLeft: 10, width: 400 }}>
+                                    Choose File
+                                </label>
+                                <input
+                                    id="fileInput"
+                                    type="file"
+                                    onChange={storeImage}
+                                    style={{ display: "none" }}
+                                />
+                            </div>
+                            <div style={{ marginTop: 10 }}>
+                                {uploadProgress > 0 && uploadProgress < 100 && (
+                                    <div style={{ width: '100%', background: 'black', borderRadius: 5, overflow: 'hidden' }}>
+                                        <div
+                                            style={{
+                                                width: `${uploadProgress}%`,
+                                                height: 10,
+                                                background: '#4caf50',
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                            </div>
                             <div style={{ display: "flex", justifyContent: "center", alignItems: 'center', marginTop: 30, marginRight: 25 }}>
                                 <Checkbox
                                     id="Checkbox"
@@ -197,11 +321,18 @@ export default function SinUpModal(props) {
                             <Typography id="modal-modal-title" variant="h7" component="h2"  >
                                 {"Already have an account?"}&nbsp;
                             </Typography>
-                            <Typography id="modal-modal-title" variant="link" component="h2" sx={{ color: 'blue' }} className='cursor-pointer hover:underline' >
+                            <Typography id="modal-modal-title" variant="h7" component="h2" sx={{ color: 'blue' }} className='cursor-pointer hover:underline' >
                                 {" login"}
                             </Typography>
                         </div>
                     </div>
+                    <Stack spacing={3} sx={{ ml: 5, width: '100%' }}>
+                        <Snackbar open={opens} autoHideDuration={6000} onClose={handleCloses}>
+                            <Alert onClose={handleCloses} severity={success.variant} sx={{ width: '100%' }}>
+                                {success.message}
+                            </Alert>
+                        </Snackbar>
+                    </Stack>
                 </Box>
             </Modal>
         </div>

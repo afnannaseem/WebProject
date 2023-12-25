@@ -22,3 +22,21 @@
 .fade {
   transition: opacity 1s ease-in-out;
 }
+.custom-file-upload {
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #2196f3;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.custom-file-upload:hover {
+  background-color: #329bf1;
+}
+
+
