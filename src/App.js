@@ -11,8 +11,8 @@ import Services from './components/Services';
 import ServiceDetails from './components/ServiceDetails';
 import Bookings from './components/Bookings';
 import Bids from './components/Bids';
-/*import UpdateNotifications from './components/UpdateNotifications';
-import CancelNotifications from './components/CancellationNotifications';
+import Feedback from './components/Feedback';
+/*import CancelNotifications from './components/CancellationNotifications';
 import InsertNotifications from './components/InsertionNotifications';
  */
 const App = () => {
@@ -31,8 +31,8 @@ const App = () => {
         <Route path="/service/:serviceId" element={<ServiceDetails />} />
         <Route path="/bookings" element={<Bookings />} />
         <Route path="/bids" element={<Bids />} />
-        {/*<Route path="/updatenotifications" element={<UpdateNotifications />} />
-        <Route path="/cancellationnotifications" element={<CancelNotifications />} />
+        <Route path="/feedback" element={<Feedback />} />
+        {/*<Route path="/cancellationnotifications" element={<CancelNotifications />} />
         <Route path="/insertionnotifications" element={<InsertNotifications />} /> */}
         </Routes>
       </div>

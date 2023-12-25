@@ -16,6 +16,9 @@ const Profile = () => (
       <li>
       <Link to="/bids">My Bids</Link>
       </li>
+      <li>
+      <Link to="/feedback">My Feedback</Link>
+      </li>
     </ul>
   </div>
 );
