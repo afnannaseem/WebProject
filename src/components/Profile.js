@@ -11,7 +11,10 @@ const Profile = () => (
       <Link to="/services">My Services</Link>
       </li>
       <li>
-      <Link to="/notifications">My Notifications</Link>
+      <Link to="/bookings">My Bookings</Link>
+      </li>
+      <li>
+      <Link to="/bids">My Bids</Link>
       </li>
     </ul>
   </div>
