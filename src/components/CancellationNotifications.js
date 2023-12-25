@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const CancelNotifications = () => {
   const [notifications, setNotifications] = useState([]);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -25,7 +24,7 @@ const CancelNotifications = () => {
         const data = await response.json();
         setNotifications(data.eventCancelNotifications);
       } catch (error) {
-        setError('Error fetching notifications.');
+        console.log(error);
       }
     };
 
@@ -54,8 +53,14 @@ const CancelNotifications = () => {
       <div className="col-lg-6 mx-auto" id='allNotificationsSecondDiv'>
         <h1 className="display-5 fw-bold text-body-emphasis">Cancellation Notifications</h1>
 
-        {error ? (
-          <p>{error}</p>
+        {!notifications ? (
+          <div
+          class="alert alert-danger"
+          role="alert"
+          id="allNotificationsNoticketsDiv"
+        >
+          <p id="allNotificationsNoTicketsPara">No notifications</p>
+        </div>
         ) : (
           <div id='allNotificationsNotificationDiv'>
             {notifications.map((notification, index) => (

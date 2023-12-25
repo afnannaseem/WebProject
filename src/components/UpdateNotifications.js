@@ -4,7 +4,6 @@ import '../styles/AllNotifications.css'
 
 const UpdateNotifications = () => {
   const [notifications, setNotifications] = useState([]);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -26,7 +25,6 @@ const UpdateNotifications = () => {
         const data = await response.json();
         setNotifications(data.eventUpdateNotifications);
       } catch (error) {
-        setError('Error fetching notifications.');
         console.error('Error fetching notifications:', error);
       }
     };
@@ -57,7 +55,13 @@ const UpdateNotifications = () => {
       <div className="px-4 py-5 my-5 text-center">
         <div className="col-lg-6 mx-auto" id='allNotificationsSecondDiv'>
           <h1 className="display-5 fw-bold text-body-emphasis">Event Update Notifications</h1>
-          {error ? <p>{error}</p> : (
+          {!notifications ? <div
+          class="alert alert-danger"
+          role="alert"
+          id="allNotificationsNoticketsDiv"
+        >
+          <p id="allNotificationsNoTicketsPara">No notifications</p>
+        </div>: (
             <div id='allNotificationsNotificationDiv'>
               {notifications.map((notification, index) => (
                 <div key={index}>

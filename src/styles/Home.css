@@ -7,3 +7,14 @@ padding-top: 1px;
 margin-top: 20px;
 padding-bottom: 10px;
 }
+
+#homeSpinnerDiv{
+    margin-top: 10%;
+    margin-left: 47%;
+}
+
+#homeLoadingEvents {
+    font-size: 1.7rem;
+    margin-top: 28px;
+    margin-left: 32.5%;
+}

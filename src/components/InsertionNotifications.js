@@ -4,7 +4,6 @@ import '../styles/AllNotifications.css'
 
 const InsertNotifications = () => {
   const [notifications, setNotifications] = useState([]);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -26,7 +25,7 @@ const InsertNotifications = () => {
         const data = await response.json();
         setNotifications(data.eventNewNotifications);
       } catch (error) {
-        setError('Error fetching notifications.');
+        console.log(error);
       }
     };
 
@@ -55,8 +54,14 @@ const InsertNotifications = () => {
     <div className="col-lg-6 mx-auto" id='allNotificationsSecondDiv'>
       <h1 className="display-5 fw-bold text-body-emphasis">Insertion Notifications</h1>
 
-      {error ? (
-        <p>{error}</p>
+      {!notifications ? (
+        <div
+        class="alert alert-danger"
+        role="alert"
+        id="allNotificationsNoticketsDiv"
+      >
+        <p id="allNotificationsNoTicketsPara">No notifications</p>
+      </div>
       ) : (
         <div id='allNotificationsNotificationDiv'>
           {notifications.map((notification, index) => (

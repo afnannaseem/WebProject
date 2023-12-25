@@ -6,6 +6,7 @@
     padding-top: 30px;
     margin-top: 20px;
     transition: transform 0.2s ease-in-out;
+    padding-bottom: 10px;
     }
 
     #ticketsSecondDiv:hover{
@@ -31,4 +32,17 @@
     
     #ticketsListElements{
     margin-top: 15px;
+    }
+
+    #ticketsNoBookedTicketsDiv{
+        width:300px;
+        height: 100px;
+        margin-left: 29.5%;
+    }
+
+    #ticketsNoBookedTickets{
+        margin-top: 12px;
+        margin-left: 30px;
+        margin-bottom: 30px;
+        font-size: 1.7rem;
     }
