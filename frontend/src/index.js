@@ -13,6 +13,7 @@ import Home from "./Pages/home";
 import Success from "./Pages/success";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import Block from "./Component/Block";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // const socket = io("http://localhost:3330");
 // socket.on("newNotification", (data) => {
@@ -33,6 +34,7 @@ root.render(
             <Route path="/home" element={<Home />} />
             <Route path="/pending" element={<Pending />} />
             <Route path="/accept" element={<Accept />} />
+            <Route path="/block" element={<Block/>} />
           </Routes>
         </BrowserRouter>
       </ProvideAuth>

@@ -96,15 +96,6 @@ function App() {
           />
         </Box>
       </header>
-      <div className="blocked-container">
-        <div className="blocked-icon">&#128683;</div>
-        <div className="blocked-message">
-          Sorry, your account is blocked. Please contact support.
-        </div>
-        <Link to="/home" className="support-button">
-          Contact Support
-        </Link>
-      </div>
     </div>
   );
 }

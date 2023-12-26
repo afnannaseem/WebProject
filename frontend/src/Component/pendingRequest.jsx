@@ -13,8 +13,8 @@ const PendingRequest = () => {
     const { data, isError, isLoading } = useQuery({
         queryKey: ['data'],
         queryFn: () => sendRequest(process.env.REACT_APP_Base_URL + "/pendingRequest", "get"),
-        staleTime: 2 * 60 * 1000,
-        refetchInterval: 2 * 60 * 1000,
+        // staleTime: 2 * 60 * 1000,
+        // refetchInterval: 2 * 60 * 1000,
     })
     const mutation = useMutation({
         mutationFn: async (idno) => {

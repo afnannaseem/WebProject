@@ -138,6 +138,28 @@ export default function LoginModal(props) {
                 else if (res?.showMessages === false) {
                     navigate('/accept', { replace: true });
                 }
+                else if (res?.status === true) {
+                    navigate('/block', { replace: true });
+                }
+                else if (res?.role === 'admin') {
+
+                }
+                else if (res?.role === 'vendor') {
+
+                }
+                else if (res?.role === 'user') {
+
+                }
+                else if (res?.role === 'superadmin') {
+                    navigate('/Dashboard', { replace: true });
+                }
+                else {
+                    setSuccess({
+                        variant: 'error',
+                        message: 'Your Account is not registered Properly!',
+                    });
+                    handleClicks();
+                }
             }
             else {
                 setRegister(false);
@@ -180,6 +202,7 @@ export default function LoginModal(props) {
         else if (res?.role === "vendor") {
         }
         else if (res?.role === "user") {
+
         }
     }
     const navigate = useNavigate();
@@ -205,6 +228,9 @@ export default function LoginModal(props) {
             }
             else if (res?.role === 'superadmin') {
                 navigate('/Dashboard', { replace: true });
+            }
+            else if (res?.status === true) {
+                navigate('/block', { replace: true });
             }
             else {
                 setSuccess({

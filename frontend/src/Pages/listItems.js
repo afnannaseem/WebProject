@@ -66,17 +66,6 @@ export default function MainListItems() {
         </ListItemIcon>
         <ListItemText sx={style2} primary="Vendors" />
       </ListItemButton>
-      <ListItemButton
-        onClick={() => {
-          setName("Sales");
-        }}
-        sx={hover}
-      >
-        <ListItemIcon sx={style}>
-          <MonetizationOnIcon />
-        </ListItemIcon>
-        <ListItemText sx={style2} primary="Sales" />
-      </ListItemButton>
     </React.Fragment>
   );
 }
