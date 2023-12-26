@@ -132,7 +132,7 @@ const EventDetail = () => {
     <div className="px-4 py-5 my-5 text-center" >
     {event ? (
       <div className="col-lg-6 mx-auto" id='eventDetailMainDiv'>
-        <h1 className="display-5 fw-bold text-body-emphasis">{event.eventName}</h1>
+        <h1 className="display-5 fw-bold text-body-emphasis" id='eventDetailMainHeadingEventName'>{event.eventName}</h1>
 
         <p className='eventDetailsParagraphElements'>Event Type: {event.eventType}</p>
         <p className='eventDetailsParagraphElements'>Date: {new Date(event.dateTime).toLocaleString()}</p>
@@ -173,6 +173,8 @@ const EventDetail = () => {
               placeholder="Rating"
               value={rating}
               onChange={(e) => setRating(e.target.value)}
+              min="1" 
+              max="5"
             />
             <label htmlFor="rating">Rating</label>
           </div>

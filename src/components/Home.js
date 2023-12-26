@@ -48,8 +48,8 @@ const HomePage = () => {
       <h2 className="mt-4">
         Search <SearchSharpIcon fontSize="large" />
       </h2>
-      <div className="row mt-4">
-        <div className="col-md-3">
+      <div className="row mt-4" id='homeSecondDiv'>
+        <div className="col-md-3" id='homeSearchDiv'>
           <div className="mb-3">
             <label className="form-label">Event Name:</label>
             <input

@@ -59,11 +59,15 @@ const TicketList = () => {
         ) : (
           <ul id="ticketsUnorderedList">
             {tickets.map((ticket) => (
+              <div id='ticketsTicketIdDiv' className="alert alert-info" role="alert">
               <li key={ticket._id} id="ticketsListElements">
-                <Link to={`/ticket/${ticket._id}`} id="ticketsLinks">
-                  <p id="ticketsParagraphs">{ticket._id}</p>
+                <p id="ticketsParagraphs">Ticket ID: {ticket._id}</p>
+                <p id="ticketsParagraphs"> {new Date(ticket.purchaseDate).toLocaleString()}</p>
+                <Link to={`/ticket/${ticket._id}`} id="ticketsLinks" className="btn btn-primary">
+                  See Ticket
                 </Link>
               </li>
+              </div>
             ))}
           </ul>
         )}

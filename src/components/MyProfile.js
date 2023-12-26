@@ -89,9 +89,9 @@ const MyProfile = () => {
   return (
     <div className="container my-profile px-4 py-2" id="myProfileMainDiv">
       <h2 className="mt-4">My Profile</h2>
-      <div className="row mt-4">
-        <div className="col-md-3">
-          <h3 id="myProfileMargin">Personal Info</h3>
+      <div className="row mt-4" style={{paddingLeft:'10px'}}>
+        <div className="col-md-3" id='myProfilePersonalInfoDiv'>
+        <h3 id="myProfileMargin">Personal Info</h3>
           {profileData ? (
             <div>
               <p class="myProfilePersonalInfoParagraph">
@@ -157,8 +157,8 @@ const MyProfile = () => {
             ></div>
           )}
         </div>
-        <div className="col-md-9">
-          <h3 id="myProfileBookedEventsHeading">Booked Events</h3>
+        <div className="col-md-9" >
+        <h3 id="myProfileBookedEventsHeading">Booked Events</h3>
           {bookedEventsSummary ? (
             <div>
               <ul>
