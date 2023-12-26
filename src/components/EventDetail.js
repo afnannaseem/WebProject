@@ -69,36 +69,69 @@ const EventBidDetail = () => {
   };
 
   return (
-    <div className="event-bid-detail">
+    <div className="container event-bid-detail">
       {event ? (
-        <div>
-          <h1>{event.eventName}</h1>
-          <p>Type: {event.eventType}</p>
-          <p>Date: {new Date(event.dateTime).toLocaleString()}</p>
-          <p>Venue: {event.venue}</p>
-          <p>Services Available: {event.servicesType.join(', ')}</p>
-          <div>
-            <select value={selectedServiceType} onChange={e => setSelectedServiceType(e.target.value)}>
-              <option value="">Select Service Type</option>
-              {event.servicesType.map((type, index) => (
-                <option key={index} value={type}>{type}</option>
-              ))}
-            </select>
-            <input type="number" placeholder="Bid Amount" value={bidAmount} onChange={e => setBidAmount(e.target.value)} />
-            <textarea placeholder="Message" value={message} onChange={e => setMessage(e.target.value)}></textarea>
-            <button onClick={handleBidSubmission}>Submit Bid</button>
+        <div className="card">
+          <div className="card-header text-center">
+            <h1>{event.eventName}</h1>
           </div>
+          <div className="card-body ">
+          <div className="text-center mb-3">
+            <p>Type: {event.eventType}</p>
+            <p>Date: {new Date(event.dateTime).toLocaleString()}</p>
+            <p>Venue: {event.venue}</p>
+            <p>Services Available: {event.servicesType.join(', ')}</p>
+            </div>
+            <h2 className="mt-4 text-center">Add Bid</h2>
+            <div className="bid-form">
+              <label htmlFor="serviceType">Service Type:</label>
+              <select
+                id="serviceType"
+                value={selectedServiceType}
+                onChange={e => setSelectedServiceType(e.target.value)}
+                className="form-control"
+              >
+                <option value="">Select Service Type</option>
+                {event.servicesType.map((type, index) => (
+                  <option key={index} value={type}>{type}</option>
+                ))}
+              </select>
+
+              <label htmlFor="bidAmount">Bid Amount:</label>
+              <input
+                type="number"
+                id="bidAmount"
+                placeholder="Bid Amount"
+                value={bidAmount}
+                onChange={e => setBidAmount(e.target.value)}
+                className="form-control"
+              />
+
+              <label htmlFor="message">Message:</label>
+              <textarea
+                id="message"
+                placeholder="Message"
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+                className="form-control"
+              ></textarea>
+
+              <button onClick={handleBidSubmission} className="btn btn-primary mt-3">Submit Bid</button>
+            </div>
+          </div>
+
+          {submitStatus && <div className="card-footer">{submitStatus}</div>}
+
+          {confirmSubmit && (
+            <div className="card-footer">
+              <p>Are you sure you want to submit this bid? You cannot edit it later.</p>
+              <button onClick={confirmAndSubmitBid} className="btn btn-success">Yes, Submit</button>
+              <button onClick={() => setConfirmSubmit(false)} className="btn btn-danger">Cancel</button>
+            </div>
+          )}
         </div>
       ) : (
         <p>Loading event details...</p>
-      )}
-      {submitStatus && <p>{submitStatus}</p>}
-      {confirmSubmit && (
-        <div>
-          <p>Are you sure you want to submit this bid? You cannot edit it later.</p>
-          <button onClick={confirmAndSubmitBid}>Yes, Submit</button>
-          <button onClick={() => setConfirmSubmit(false)}>Cancel</button>
-        </div>
       )}
     </div>
   );

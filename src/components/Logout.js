@@ -11,7 +11,7 @@ const LogoutButton = () => {
     // You can also perform additional logout actions if needed
 
     // Redirect to the login page or any other desired page
-    navigate('/');
+    navigate('/vendor/login');
   };
 
   return (

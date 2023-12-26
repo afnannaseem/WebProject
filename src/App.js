@@ -18,23 +18,24 @@ import InsertNotifications from './components/InsertionNotifications';
 const App = () => {
   return (
     <Router>
-      <div style={{backgroundColor:'#E3F4F4'}}>
+      <div style={{backgroundColor:'#f4e8e0', minHeight:'100vh', display: 'Flex', flexDirection: 'column', justifyContent: 'space-between'}}>
         <NavBar />
         <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/logout" element={<LogoutButton />} />
-        <Route path="/event/:eventId" element={<EventDetail />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/myprofile" element={<MyProfile />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/service/:serviceId" element={<ServiceDetails />} />
-        <Route path="/bookings" element={<Bookings />} />
-        <Route path="/bids" element={<Bids />} />
-        <Route path="/feedback" element={<Feedback />} />
+        <Route path="/vendor/login" element={<Login />} />
+        <Route path="/vendor/home" element={<HomePage />} />
+        <Route path="/vendor/logout" element={<LogoutButton />} />
+        <Route path="/vendor/event/:eventId" element={<EventDetail />} />
+        <Route path="/vendor/profile" element={<Profile />} />
+        <Route path="/vendor/myprofile" element={<MyProfile />} />
+        <Route path="/vendor/services" element={<Services />} />
+        <Route path="/vendor/service/:serviceId" element={<ServiceDetails />} />
+        <Route path="/vendor/bookings" element={<Bookings />} />
+        <Route path="/vendor/bids" element={<Bids />} />
+        <Route path="/vendor/feedback" element={<Feedback />} />
         {/*<Route path="/cancellationnotifications" element={<CancelNotifications />} />
         <Route path="/insertionnotifications" element={<InsertNotifications />} /> */}
         </Routes>
+        <div></div>
       </div>
     </Router>
   );

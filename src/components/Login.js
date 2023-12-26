@@ -38,7 +38,7 @@ const Login = () => {
         console.log('User logged in successfully');
         localStorage.setItem('token', data.token);
         // Navigate to the main page or the protected route
-        navigate('/home');
+        navigate('/vendor/home');
       } else {
         console.error('Login failed:', data.error);
         setErrorMessage(data.error || 'Login failed. Please try again.');

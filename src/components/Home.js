@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import EventTile from './EventTile';
+import '../style/HomePage.css';
+
 
 const HomePage = () => {
   const [events, setEvents] = useState([]);
-  const [searchParams, setSearchParams] = useState({
-    eventName: '',
-    eventType: '',
-    venue: '',
-    serviceType: ''
-  });
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchAllEvents();
@@ -16,7 +13,7 @@ const HomePage = () => {
 
   const fetchAllEvents = () => {
     const token = localStorage.getItem('token');
-    const apiUrl = process.env.REACT_APP_API_BASE_URL; // Update with your API URL
+    const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
     fetch(`${apiUrl}search/allevents`, {
       method: 'GET',
@@ -32,10 +29,9 @@ const HomePage = () => {
 
   const searchEvents = () => {
     const token = localStorage.getItem('token');
-    const apiUrl = process.env.REACT_APP_API_BASE_URL; // Update with your API URL
-    const searchQuery = new URLSearchParams(searchParams).toString();
+    const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
-    fetch(`${apiUrl}search/events?${searchQuery}`, {
+    fetch(`${apiUrl}search/events?query=${searchTerm}`, {
       method: 'GET',
       headers: {
         'token': token,
@@ -48,74 +44,29 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    if (searchParams.eventName || searchParams.eventType || searchParams.venue || searchParams.serviceType) {
+    if (searchTerm) {
       searchEvents();
+    } else {
+      fetchAllEvents();
     }
-  }, [searchParams]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSearchParams(prevParams => ({
-      ...prevParams,
-      [name]: value
-    }));
-  };
+  }, [searchTerm]);
 
   return (
-    <div className="container home-page" style={{ fontFamily: 'Nunito, sans-serif', backgroundColor: '#E3F4F4' }}>
+    <div className="container home-page">
       <h1 className="mt-4">Search Events</h1>
-      <div className="row mt-4">
-        <div className="col-md-3">
-          {/* Search Filters */}
-          <div className="mb-3">
-            <label className="form-label">Event Name:</label>
-            <input
-              type="text"
-              className="form-control"
-              name="eventName"
-              value={searchParams.eventName}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Event Type:</label>
-            <input
-              type="text"
-              className="form-control"
-              name="eventType"
-              value={searchParams.eventType}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Venue:</label>
-            <input
-              type="text"
-              className="form-control"
-              name="venue"
-              value={searchParams.venue}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Service Type:</label>
-            <input
-              type="text"
-              className="form-control"
-              name="serviceType"
-              value={searchParams.serviceType}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <div className="col-md-9">
-          {/* Event Tiles */}
-          <div className="event-list">
-            {events.map(event => (
-              <EventTile key={event._id} event={event} />
-            ))}
-          </div>
-        </div>
+      <div className="search-bar">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search by event name, type, venue, or service type"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <div className="event-list">
+        {events.map(event => (
+          <EventTile key={event._id} event={event} />
+        ))}
       </div>
     </div>
   );

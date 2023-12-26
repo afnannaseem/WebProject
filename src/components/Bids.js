@@ -61,30 +61,36 @@ const BidsList = () => {
   };
 
   return (
-    <div>
-      <h1>Bid List</h1>
-      {loading ? (
-        <p>Loading bids...</p>
-      ) : error ? (
-        <p>Error: {error}</p>
-      ) : (
-        <ul>
-          {bids.map(bid => (
-            <li key={bid.bidId}>
-              <p>Event Name: {bid.eventName}</p>
-              <p>Event Date: {new Date(bid.eventDate).toLocaleDateString()}</p>
-              <p>Service Type: {bid.serviceType}</p>
-              <p>Bid Amount: {bid.bidAmount}</p>
-              <p>Message: {bid.message}</p>
-              <p>Status: {bid.status}</p>
-              <p>Submitted Date: {new Date(bid.dateSubmitted).toLocaleDateString()}</p>
-              {bid.status === 'submitted' && (
-                <button onClick={() => deleteBid(bid.bidId)}>Delete</button>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="container bids-list-page">
+      <div className="card">
+        <div className="card-header text-center">
+          <h1>Bid List</h1>
+        </div>
+        <div className="card-body text-center">
+          {loading ? (
+            <p>Loading bids...</p>
+          ) : error ? (
+            <p className="text-danger">{error}</p>
+          ) : (
+            <ul className="list-group">
+              {bids.map(bid => (
+                <li key={bid.bidId} className="list-group-item">
+                  <p>Event Name: {bid.eventName}</p>
+                  <p>Event Date: {new Date(bid.eventDate).toLocaleDateString()}</p>
+                  <p>Service Type: {bid.serviceType}</p>
+                  <p>Bid Amount: {bid.bidAmount}</p>
+                  <p>Message: {bid.message}</p>
+                  <p>Status: {bid.status}</p>
+                  <p>Submitted Date: {new Date(bid.dateSubmitted).toLocaleDateString()}</p>
+                  {bid.status === 'submitted' && (
+                    <button className="btn btn-danger" onClick={() => deleteBid(bid.bidId)}>Delete</button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

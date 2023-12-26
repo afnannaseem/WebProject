@@ -70,32 +70,60 @@ const MyProfile = () => {
   };
 
   return (
-    <div className="my-profile">
-      <h1>My Vendor Profile</h1>
-      {vendorData ? (
-        <div>
-          <p>Email: {vendorData.email}</p>
-          <p>Name: {vendorData.name}</p>
-          <p>Phone: {vendorData.phone}</p>
-          <p>Address: {vendorData.address}</p>
-          <p>Description: {vendorData.description}</p>
-          <button onClick={handleUpdate}>Update Your Profile</button>
-          {showUpdateForm && (
-            <div>
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-              <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone" />
-              <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Address" />
-              <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description"></textarea>
-              <button onClick={handleSubmit}>Submit</button>
-            </div>
-          )}
-          
-          {error && <p>{error}</p>}
+    <div className="container my-profile-page">
+      <div className="card">
+        <div className="card-header text-center">
+          <h1>My Vendor Profile</h1>
         </div>
-      ) : (
-        <p>Loading profile...</p>
-      )}
+        <div className="card-body">
+          {vendorData ? (
+            <>
+              <div className="text-center mb-3">
+                <p>Email: {vendorData.email}</p>
+                <p>Name: {vendorData.name}</p>
+                <p>Phone: {vendorData.phone}</p>
+                <p>Address: {vendorData.address}</p>
+                <p>Description: {vendorData.description}</p>
+              </div>
+              <button className="btn btn-primary d-block mx-auto" onClick={handleUpdate}>Update Your Profile</button>
+              
+              {showUpdateForm && (
+                <div className="mt-4">
+                  <div className="form-group text-left">
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
+                  </div>
+
+                  <div className="form-group text-left">
+                    <label htmlFor="email">Email:</label>
+                    <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+                  </div>
+
+                  <div className="form-group text-left">
+                    <label htmlFor="phone">Phone:</label>
+                    <input type="text" className="form-control" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone" />
+                  </div>
+
+                  <div className="form-group text-left">
+                    <label htmlFor="address">Address:</label>
+                    <input type="text" className="form-control" id="address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Address" />
+                  </div>
+
+                  <div className="form-group text-left">
+                    <label htmlFor="description">Description:</label>
+                    <textarea className="form-control" id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description"></textarea>
+                  </div>
+                  
+                  <button className="btn btn-success" onClick={handleSubmit}>Submit</button>
+                </div>
+              )}
+              {error && <p className="text-danger">{error}</p>}
+            </>
+          ) : (
+            <p>Loading profile...</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

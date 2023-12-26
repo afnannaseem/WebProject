@@ -61,31 +61,37 @@ const BookingList = () => {
   };
 
   return (
-    <div>
-      <h1>Booking List</h1>
-      {loading ? (
-        <p>Loading bookings...</p>
-      ) : error ? (
-        <p>Error: {error}</p>
-      ) : (
-        <ul>
-          {bookings.map(booking => (
-            <li key={booking.bookingId}>
-              <p>Event Name: {booking.eventName}</p>
-              <p>Date of Event: {new Date(booking.eventDate).toLocaleDateString()}</p>
-              <p>Service: {booking.serviceName}</p>
-              <p>Booking Date: {new Date(booking.bookingDate).toLocaleDateString()}</p>
-              <p>Status: {booking.status}</p>
-              {booking.status === 'pending' && (
-                <>
-                  <button onClick={() => updateBookingStatus(booking.bookingId, 'confirmed')}>Accept</button>
-                  <button onClick={() => updateBookingStatus(booking.bookingId, 'cancelled')}>Reject</button>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="container booking-list-page">
+      <div className="card">
+        <div className="card-header text-center">
+          <h1>Booking List</h1>
+        </div>
+        <div className="card-body text-center">
+          {loading ? (
+            <p>Loading bookings...</p>
+          ) : error ? (
+            <p className="text-danger">{error}</p>
+          ) : (
+            <ul className="list-group">
+              {bookings.map(booking => (
+                <li key={booking.bookingId} className="list-group-item">
+                  <p>Event Name: {booking.eventName}</p>
+                  <p>Date of Event: {new Date(booking.eventDate).toLocaleDateString()}</p>
+                  <p>Service: {booking.serviceName}</p>
+                  <p>Booking Date: {new Date(booking.bookingDate).toLocaleDateString()}</p>
+                  <p>Status: {booking.status}</p>
+                  {booking.status === 'pending' && (
+                    <div>
+                      <button className="btn btn-success" onClick={() => updateBookingStatus(booking.bookingId, 'confirmed')}>Accept</button>
+                      <button className="btn btn-danger" onClick={() => updateBookingStatus(booking.bookingId, 'cancelled')}>Reject</button>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

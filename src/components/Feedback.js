@@ -67,30 +67,36 @@ const FeedbacksList = () => {
   };
 
   return (
-    <div>
-      <h1>Feedback List</h1>
-      {loading ? (
-        <p>Loading feedbacks...</p>
-      ) : error ? (
-        <p>Error: {error}</p>
-      ) : (
-        <ul>
-          {feedbacks.map(feedback => (
-            <li key={feedback.feedbackId}>
-              <p>Event Name: {feedback.eventName}</p>
-              <p>Rating: {feedback.rating}</p>
-              <p>Comment: {feedback.comment}</p>
-              <p>Response: {feedback.response ? feedback.response.text : 'No response yet'}</p>
-              {feedback.response && feedback.response.text === "" && (
-                <div>
-                  <input type="text" value={responseText[feedback.feedbackId] || ''} onChange={(e) => handleChange(e, feedback.feedbackId)} placeholder="Your response" />
-                  <button onClick={() => handleResponse(feedback.feedbackId)}>Submit Response</button>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="container feedbacks-list-page">
+      <div className="card">
+        <div className="card-header text-center">
+          <h1>Feedback List</h1>
+        </div>
+        <div className="card-body">
+          {loading ? (
+            <p>Loading feedbacks...</p>
+          ) : error ? (
+            <p className="text-danger">{error}</p>
+          ) : (
+            <ul className="list-group">
+              {feedbacks.map(feedback => (
+                <li key={feedback.feedbackId} className="list-group-item">
+                  <p>Event Name: {feedback.eventName}</p>
+                  <p>Rating: {feedback.rating}</p>
+                  <p>Comment: {feedback.comment}</p>
+                  <p>Response: {feedback.response ? feedback.response.text : 'No response yet'}</p>
+                  {feedback.response && feedback.response.text === "" && (
+                    <div>
+                      <input type="text" value={responseText[feedback.feedbackId] || ''} onChange={(e) => handleChange(e, feedback.feedbackId)} placeholder="Your response" className="form-control" />
+                      <button className="btn btn-primary mt-2" onClick={() => handleResponse(feedback.feedbackId)}>Submit Response</button>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

@@ -110,57 +110,69 @@ const ServiceList = () => {
   };
 
   return (
-    <div>
-      <h1>Service List</h1>
-      {loading ? (
-        <p>Loading services...</p>
-      ) : error ? (
-        <p>Error: {error}</p>
-      ) : (
-        <ul>
-            {services.map(service => {
-                console.log('Service ID:', service._id); // Debugging: Check the service ID
-                return (
-                <li key={service._id}>
-                    <Link to={`/service/${service._id}`}>
+    <div className="container service-list-page">
+      <div className="card">
+        <div className="card-header text-center">
+          <h1>Service List</h1>
+        </div>
+        <div className="card-body">
+          {loading ? (
+            <p>Loading services...</p>
+          ) : error ? (
+            <p className="text-danger">{error}</p>
+          ) : (
+            <ul className="list-group">
+              {services.map(service => (
+                <li key={service._id} className="list-group-item d-flex justify-content-between align-items-center">
+                  <Link to={`/vendor/service/${service._id}`}>
                     <h6>{service.serviceName}</h6>
-                    </Link> 
-                    <button onClick={() => {
-                    console.log('Deleting service with ID:', service._id); // Debugging: Log when attempting to delete
-                    deleteService(service._id);
-                    }}>Delete</button> 
+                  </Link>
+                  <button className="btn btn-danger" onClick={() => deleteService(service._id)}>Delete</button>
                 </li>
-                );
-            })}
-        </ul>
-      )}
-      <button onClick={() => setShowAddForm(true)}>Add a Service</button>
-      {showAddForm && (
-        <form onSubmit={handleSubmit}>
-          <input type="text" name="serviceName" value={newService.serviceName} onChange={handleInputChange} placeholder="Service Name" required />
-          <textarea name="description" value={newService.description} onChange={handleInputChange} placeholder="Description"></textarea>
-          <input type="number" name="price" value={newService.price} onChange={handleInputChange} placeholder="Price" required />
-          <input 
-            type="date" 
-            name="availabilityStart" 
-            value={newService.availabilityStart} 
-            onChange={handleInputChange} 
-            placeholder="Availability Start Date" 
-            required 
-          />
-          <input 
-            type="date" 
-            name="availabilityEnd" 
-            value={newService.availabilityEnd} 
-            onChange={handleInputChange} 
-            placeholder="Availability End Date" 
-            required 
-          />
-          <input type="text" name="category" value={newService.category} onChange={handleInputChange} placeholder="Category" required />
-          <button type="submit">Submit</button>
-          <button type="button" onClick={() => setShowAddForm(false)}>Cancel</button>
-        </form>
-      )}
+              ))}
+            </ul>
+          )}
+
+          <button className="btn btn-primary d-block mx-auto mt-3" onClick={() => setShowAddForm(true)}>Add a Service</button>
+
+          {showAddForm && (
+            <form onSubmit={handleSubmit} className="mt-4">
+              <div className="form-group text-left">
+                <label htmlFor="serviceName">Service Name:</label>
+                <input type="text" className="form-control" id="serviceName" name="serviceName" value={newService.serviceName} onChange={handleInputChange} placeholder="Service Name" required />
+              </div>
+
+              <div className="form-group text-left">
+                <label htmlFor="description">Description:</label>
+                <textarea className="form-control" id="description" name="description" value={newService.description} onChange={handleInputChange} placeholder="Description"></textarea>
+              </div>
+
+              <div className="form-group text-left">
+                <label htmlFor="price">Price:</label>
+                <input type="number" className="form-control" id="price" name="price" value={newService.price} onChange={handleInputChange} placeholder="Price" required />
+              </div>
+
+              <div className="form-group text-left">
+                <label htmlFor="availabilityStart">Availability Start Date:</label>
+                <input type="date" className="form-control" id="availabilityStart" name="availabilityStart" value={newService.availabilityStart} onChange={handleInputChange} required />
+              </div>
+
+              <div className="form-group text-left">
+                <label htmlFor="availabilityEnd">Availability End Date:</label>
+                <input type="date" className="form-control" id="availabilityEnd" name="availabilityEnd" value={newService.availabilityEnd} onChange={handleInputChange} required />
+              </div>
+
+              <div className="form-group text-left">
+                <label htmlFor="category">Category:</label>
+                <input type="text" className="form-control" id="category" name="category" value={newService.category} onChange={handleInputChange} placeholder="Category" required />
+              </div>
+              
+              <button type="submit" className="btn btn-success d-block mx-auto">Submit</button>
+              <button type="button" className="btn btn-secondary d-block mx-auto mt-2" onClick={() => setShowAddForm(false)}>Cancel</button>
+            </form>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
