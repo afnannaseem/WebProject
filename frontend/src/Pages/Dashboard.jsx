@@ -157,9 +157,6 @@ export default function MainSuperAdmin() {
             name === 'Vendors' ? <Vendor /> : null
           }
           {
-            name === 'Sales' ? <Sale /> : null
-          }
-          {
             name === 'Organizer' ? <Organizar /> : null
           }
 
